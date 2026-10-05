@@ -1,0 +1,146 @@
+name: Export Windows exe
+
+# 打 tag 时在 Windows runner 上导出单文件 exe，建 GitHub Release。
+# 触发：push 一个 v* 标签，或手工触发（workflow_dispatch，用输入的 tag 名）。
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '要发布的标签名，例如 v0.4.0'
+        required: true
+        type: string
+
+env:
+  PROJECT_DIR: sand-echo
+
+permissions:
+  contents: write        # 建 Release、上传附件
+
+jobs:
+  export:
+    name: 导出 Windows exe
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 读取 Godot 版本
+        id: ver
+        shell: pwsh
+        run: |
+          $v = (Get-Content "$env:PROJECT_DIR\.godot-version" -Raw).Trim()
+          Write-Host "Godot $v"
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: 下载编辑器
+        id: editor
+        shell: pwsh
+        run: |
+          $v = '${{ steps.ver.outputs.version }}'
+          $url = "https://github.com/godotengine/godot/releases/download/$v-stable/Godot_v$v-stable_win64.exe.zip"
+          $zip = "$env:RUNNER_TEMP\editor.zip"
+          Write-Host "下载 $url"
+          Invoke-WebRequest -Uri $url -OutFile $zip
+          Expand-Archive -Path $zip -DestinationPath "$env:RUNNER_TEMP\editor" -Force
+          $exe = Get-ChildItem "$env:RUNNER_TEMP\editor" -Filter *.exe | Select-Object -First 1
+          Write-Host "编辑器: $($exe.FullName)"
+          "exe=$($exe.FullName)" >> $env:GITHUB_OUTPUT
+
+      - name: 下载并裁剪导出模板
+        shell: pwsh
+        run: |
+          $v = '${{ steps.ver.outputs.version }}'
+          $url = "https://github.com/godotengine/godot/releases/download/$v-stable/Godot_v$v-stable_export_templates.tpz"
+          $tpz = "$env:RUNNER_TEMP\templates.tpz"
+          Write-Host "下载 $url（约 1.2 GB，只需其中的 ~104 MB）"
+          Invoke-WebRequest -Uri $url -OutFile $tpz
+
+          # 全量模板约 2 GB（全平台 debug+release），实际只用 Windows release x86_64。
+          # 编辑器暂不提供按平台下载 TPZ，见 godotengine/godot-proposals#647，
+          # 所以整包下后只解压三个文件。
+          $dest = "$env:APPDATA\Godot\export_templates\$v.stable"
+          New-Item -ItemType Directory -Force -Path $dest | Out-Null
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zip = [System.IO.Compression.ZipFile]::OpenRead($tpz)
+          foreach ($name in @('templates/windows_release_x86_64.exe','templates/icudt_godot.dat','templates/version.txt')) {
+            $e = $zip.Entries | Where-Object { $_.FullName -eq $name }
+            if (-not $e) { throw "TPZ 里找不到 $name" }
+            [System.IO.Compression.ZipFileExtensions]::ExtractToFile($e, (Join-Path $dest $name.Split('/')[-1]), $true)
+          }
+          $zip.Dispose()
+          $vt = (Get-Content "$dest\version.txt" -Raw).Trim()
+          if ($vt -ne "$v.stable") { throw "模板版本不符：期望 $v.stable，实得 $vt" }
+          Write-Host "模板就位 $dest（$vt）"
+
+      - name: 导入资源
+        shell: pwsh
+        run: |
+          & '${{ steps.editor.outputs.exe }}' --headless --path $env:PROJECT_DIR --import
+          if ($LASTEXITCODE -ne 0) { throw "import 失败" }
+
+      - name: 脚本编译门禁
+        shell: pwsh
+        run: |
+          # --import 只导入资源、不编译 .gd；解析错误会被静默跳过。
+          # 必须逐脚本 load 一次，否则脚本加载失败没人知道。
+          & '${{ steps.editor.outputs.exe }}' --headless --path $env:PROJECT_DIR `
+            res://tests/script_compile.tscn --quit-after 200000
+          if ($LASTEXITCODE -ne 0) { throw "脚本编译门禁未通过" }
+
+      - name: 导出 exe
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "$env:PROJECT_DIR\build\windows" | Out-Null
+          & '${{ steps.editor.outputs.exe }}' --headless --path $env:PROJECT_DIR `
+            --export-release "Windows Desktop" "build/windows/sand-echo.exe"
+          if ($LASTEXITCODE -ne 0) { throw "导出失败" }
+          Get-ChildItem "$env:PROJECT_DIR\build\windows"
+
+      - name: 校验产物
+        shell: pwsh
+        run: |
+          $exe = "$env:PROJECT_DIR\build\windows\sand-echo.exe"
+          if (-not (Test-Path $exe)) { throw "exe 不存在" }
+          $mb = (Get-Item $exe).Length / 1MB
+          Write-Host ("大小 {0:N1} MB" -f $mb)
+          # 内嵌 PCK 的 Windows 可执行须以 MZ 开头；引擎本体约 100 MB，低于 50 MB 说明不完整。
+          $fs = [System.IO.File]::OpenRead($exe)
+          $b = New-Object byte[] 2
+          [void]$fs.Read($b, 0, 2)
+          $fs.Close()
+          if ($b[0] -ne 0x4D -or $b[1] -ne 0x5A) { throw "不是有效 PE（缺 MZ 头）" }
+          if ($mb -lt 50) { throw "exe 过小（$mb MB），导出很可能不完整" }
+          Write-Host "校验通过"
+
+      - name: 打包 + 校验和
+        shell: pwsh
+        run: |
+          $h = (Get-FileHash "$env:PROJECT_DIR\build\windows\sand-echo.exe" -Algorithm SHA256).Hash
+          "$h  sand-echo.exe" -replace '  sand-echo.exe', ' sand-echo.exe' | Out-File "$env:PROJECT_DIR\build\windows\sha256.txt" -Encoding ascii
+          Compress-Archive -Path "$env:PROJECT_DIR\build\windows\sand-echo.exe" -DestinationPath "$env:RUNNER_TEMP\sand-echo-windows-x86_64.zip" -Force
+          Write-Host "SHA256 $h"
+          Get-ChildItem "$env:PROJECT_DIR\build\windows" | Format-Table Name, Length
+
+      - name: 挂进 Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+        run: |
+          $tag = $env:TAG
+          $assets = @(
+            "$env:RUNNER_TEMP\sand-echo-windows-x86_64.zip",
+            "$env:PROJECT_DIR\build\windows\sha256.txt"
+          )
+          if ($env:GITHUB_EVENT_NAME -eq 'push') {
+            & gh release create $tag --repo $env:GITHUB_REPOSITORY --verify-tag `
+              --title "沙之回响 Echoes of Sand $tag" --generate-notes @assets
+          } else {
+            & gh release create $tag --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA `
+              --title "沙之回响 Echoes of Sand $tag" --generate-notes @assets
+          }
+          if ($LASTEXITCODE -ne 0) { throw "创建 Release 失败" }
+          & gh release view $tag --repo $env:GITHUB_REPOSITORY
