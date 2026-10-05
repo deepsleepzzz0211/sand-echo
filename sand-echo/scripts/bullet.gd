@@ -52,12 +52,23 @@ var _age: float = 0.0
 var _hit_ids: Dictionary = {}
 var _sprite: Sprite2D = null
 var _bounds: Rect2 = Rect2()
+## setup() 只记录意图，视觉真正落在 _ready() 应用。
+## 原因：_sprite 是普通 var，只在 _ready() 里赋值；而 game 侧的调用顺序是
+## instantiate → setup() → add_child()，setup() 时节点还没进树、_ready() 没跑，
+## _sprite 仍是 null，于是「if _sprite != null」里的贴图与配色赋值全部静默跳过。
+## 症状是敌我弹丸都用 bullet.tscn 里写死的默认贴图、且都是纯白——
+## 也就是玩家最初报的「敌人的子弹跟角色的子弹一个样式」。
+var _pending_tex: Texture2D = null
+var _pending_tint: Color = Color(1, 1, 1, 1)
+var _pending_scale: float = 1.0
 
 
 func _ready() -> void:
 	add_to_group("bullet")
 	z_index = 5
 	_sprite = get_node("Sprite") as Sprite2D
+	# 现在 _sprite 已就绪，把 setup() 记下的意图真正落地
+	_apply_pending_visual()
 	var cs := CollisionShape2D.new()
 	var circle := CircleShape2D.new()
 	circle.radius = 5.0
@@ -73,16 +84,14 @@ func set_tier(tier: int) -> void:
 	if owner_kind != Owner.PLAYER:
 		return
 	var idx := clampi(tier - 1, 0, TEX_TIER.size() - 1)
-	if _sprite != null:
-		_sprite.texture = TEX_TIER[idx]
-		# 高级弹丸自带一点自发光，暗底上更醒目
-		var t := float(idx) / float(TEX_TIER.size() - 1)
-		var boost := Color(1.0, 1.0, 1.0).lerp(Color(1.25, 1.2, 1.1), t)
-		_sprite.modulate = Color(
-			COLOR_PLAYER.r * boost.r,
-			COLOR_PLAYER.g * boost.g,
-			COLOR_PLAYER.b * boost.b,
-			COLOR_PLAYER.a)
+	# 高级弹丸自带一点自发光，暗底上更醒目
+	var t := float(idx) / float(TEX_TIER.size() - 1)
+	var boost := Color(1.0, 1.0, 1.0).lerp(Color(1.25, 1.2, 1.1), t)
+	_set_visual(TEX_TIER[idx], Color(
+		COLOR_PLAYER.r * boost.r,
+		COLOR_PLAYER.g * boost.g,
+		COLOR_PLAYER.b * boost.b,
+		COLOR_PLAYER.a), _pending_scale)
 
 
 func setup(p_dir: Vector2, p_damage: int, p_owner: int, p_pierce: int = 0) -> void:
@@ -95,18 +104,32 @@ func setup(p_dir: Vector2, p_damage: int, p_owner: int, p_pierce: int = 0) -> vo
 		collision_layer = LAYER_PLAYER_BULLET
 		collision_mask = MASK_PLAYER_BULLET
 		add_to_group("player_bullet")
-		if _sprite != null:
-			_sprite.texture = TEX_PLAYER
-			_sprite.modulate = COLOR_PLAYER
+		_set_visual(TEX_PLAYER, COLOR_PLAYER, 1.0)
 	else:
 		collision_layer = LAYER_ENEMY_BULLET
 		collision_mask = MASK_ENEMY_BULLET
 		add_to_group("enemy_bullet")
-		if _sprite != null:
-			_sprite.texture = TEX_ENEMY
-			_sprite.modulate = COLOR_ENEMY
 		# 与玩家侧一致：缩放节点本身，视觉与碰撞体一起变大
-		scale = Vector2.ONE * ENEMY_SCALE
+		_set_visual(TEX_ENEMY, COLOR_ENEMY, ENEMY_SCALE)
+
+
+## 记录视觉意图。若已在场景树内则立即应用，否则等 _ready() 兜底。
+## 这样调用方无论在 add_child() 之前还是之后调 setup()/set_tier() 都一样生效。
+func _set_visual(tex: Texture2D, tint: Color, sc: float) -> void:
+	_pending_tex = tex
+	_pending_tint = tint
+	_pending_scale = sc
+	if _sprite != null:
+		_apply_pending_visual()
+
+
+func _apply_pending_visual() -> void:
+	if _sprite == null:
+		return
+	if _pending_tex != null:
+		_sprite.texture = _pending_tex
+	_sprite.modulate = _pending_tint
+	scale = Vector2.ONE * _pending_scale
 
 
 func set_bounds(rect: Rect2) -> void:

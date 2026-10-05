@@ -107,13 +107,16 @@ func _audit_runtime() -> void:
 	eb.queue_free()
 
 
+## 严格复刻 game 侧顺序：instantiate → setup/set_tier → add_child。
+## 早先这个辅助是先 add_child 再 setup，顺序反了，把「setup 里视觉赋值
+## 因 _sprite 为 null 而静默跳过」这个 bug 一起盖住了 —— 测试自己骗了自己。
 func _make(parent: Node, pos: Vector2, dir: Vector2, kind: int) -> Node:
 	var packed: PackedScene = load("res://scenes/bullet.tscn")
 	var b := packed.instantiate()
-	parent.add_child(b)
 	b.set("lifetime", 99.0)
 	b.call("setup", dir, 5, kind, 0)
 	b.position = pos
+	parent.add_child(b)
 	return b
 
 
@@ -137,8 +140,13 @@ func _shoot() -> void:
 
 	# 上排：玩家弹四个等级；下排：敌人弹三发
 	for i in 4:
-		var b := _make(world, Vector2(400 + i * 320, 440), Vector2.RIGHT, 0)
+		var packed: PackedScene = load("res://scenes/bullet.tscn")
+		var b := packed.instantiate()
+		b.set("lifetime", 99.0)
+		b.call("setup", Vector2.RIGHT, 5, 0, 0)
 		b.call("set_tier", i + 1)
+		b.position = Vector2(400 + i * 320, 440)
+		world.add_child(b)
 	for i in 3:
 		_make(world, Vector2(400 + i * 320, 660), Vector2.LEFT, 1)
 	for i in 3:
