@@ -1,0 +1,310 @@
+{
+  "font": {
+    "cache_texture_pages_by_size": {
+      "12": 1,
+      "24": 2,
+      "36": 1,
+      "48": 1,
+      "72": 1
+    },
+    "font_path": "res://assets/ui/fonts/ark-pixel-12px-proportional-zh_hans.ttf",
+    "supported_chars": 24869
+  },
+  "leak_verdict": {
+    "d12": 0.07,
+    "d23": -0.05,
+    "per_run": {
+      "1": {
+        "floor": 4,
+        "static_mb": 76.5505771636963
+      },
+      "2": {
+        "floor": 4,
+        "static_mb": 76.6223812103271
+      },
+      "3": {
+        "floor": 4,
+        "static_mb": 76.575159072876
+      }
+    },
+    "text": "三局持平，无泄漏"
+  },
+  "marks": [
+    {
+      "label": "主菜单稳定后",
+      "objects": 1623.0,
+      "static_max_mb": 61.6629400253296,
+      "static_mb": 61.6133489608765
+    },
+    {
+      "label": "第 1 局结束（第 4 层）",
+      "objects": 3662.0,
+      "static_max_mb": 84.3093357086182,
+      "static_mb": 76.5372562408447
+    },
+    {
+      "label": "第 1 局后回到主菜单",
+      "objects": 1722.0,
+      "static_max_mb": 84.3093357086182,
+      "static_mb": 68.0318393707275
+    },
+    {
+      "label": "第 2 局结束（第 4 层）",
+      "objects": 3670.0,
+      "static_max_mb": 84.8961544036865,
+      "static_mb": 76.6088848114014
+    },
+    {
+      "label": "第 2 局后回到主菜单",
+      "objects": 1722.0,
+      "static_max_mb": 84.8961544036865,
+      "static_mb": 68.0497798919678
+    },
+    {
+      "label": "第 3 局结束（第 4 层）",
+      "objects": 3644.0,
+      "static_max_mb": 84.9416370391846,
+      "static_mb": 76.559663772583
+    }
+  ],
+  "phase_order": [
+    "01_主菜单",
+    "R1_开局",
+    "R1_F2",
+    "R1_F3",
+    "R1_F4",
+    "R1_死亡结算",
+    "02_回主菜单",
+    "R2_开局",
+    "R2_F2",
+    "R2_F3",
+    "R2_F4",
+    "R2_死亡结算",
+    "03_回主菜单",
+    "R3_开局",
+    "R3_F2",
+    "R3_F3",
+    "R3_F4",
+    "R3_死亡结算"
+  ],
+  "phase_peaks": {
+    "01_主菜单": {
+      "buffer_mb": 6.17312622070313,
+      "nodes": 35.0,
+      "objects": 1626.0,
+      "phys_active": 0.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 61.6629400253296,
+      "static_mb": 61.6238965988159,
+      "texture_mb": 20.0696134567261,
+      "video_mb": 26.2427396774292
+    },
+    "02_回主菜单": {
+      "buffer_mb": 10.2730407714844,
+      "nodes": 791.0,
+      "objects": 3662.0,
+      "phys_active": 0.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 84.3093357086182,
+      "static_mb": 76.5380382537842,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9406175613403
+    },
+    "03_回主菜单": {
+      "buffer_mb": 10.2730407714844,
+      "nodes": 793.0,
+      "objects": 3670.0,
+      "phys_active": 0.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 84.8961544036865,
+      "static_mb": 76.6098499298096,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9406175613403
+    },
+    "R1_F2": {
+      "buffer_mb": 8.21569061279297,
+      "nodes": 1512.0,
+      "objects": 5500.0,
+      "phys_active": 2.0,
+      "phys_islands": 1.0,
+      "phys_pairs": 1.0,
+      "static_max_mb": 84.1943416595459,
+      "static_mb": 84.1445255279541,
+      "texture_mb": 22.167576789856,
+      "video_mb": 30.3832674026489
+    },
+    "R1_F3": {
+      "buffer_mb": 10.247428894043,
+      "nodes": 1537.0,
+      "objects": 5554.0,
+      "phys_active": 7.0,
+      "phys_islands": 6.0,
+      "phys_pairs": 6.0,
+      "static_max_mb": 84.3093357086182,
+      "static_mb": 84.2579326629639,
+      "texture_mb": 22.167576789856,
+      "video_mb": 32.4150056838989
+    },
+    "R1_F4": {
+      "buffer_mb": 10.2730407714844,
+      "nodes": 791.0,
+      "objects": 3669.0,
+      "phys_active": 1.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 84.3093357086182,
+      "static_mb": 76.5505771636963,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9406175613403
+    },
+    "R1_开局": {
+      "buffer_mb": 8.21546173095703,
+      "nodes": 1512.0,
+      "objects": 5509.0,
+      "phys_active": 2.0,
+      "phys_islands": 1.0,
+      "phys_pairs": 1.0,
+      "static_max_mb": 84.1862125396729,
+      "static_mb": 84.136022567749,
+      "texture_mb": 22.167576789856,
+      "video_mb": 30.383038520813
+    },
+    "R1_死亡结算": {
+      "buffer_mb": 10.2730407714844,
+      "nodes": 791.0,
+      "objects": 3662.0,
+      "phys_active": 0.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 84.3093357086182,
+      "static_mb": 76.5388622283936,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9406175613403
+    },
+    "R2_F2": {
+      "buffer_mb": 10.247200012207,
+      "nodes": 1527.0,
+      "objects": 5540.0,
+      "phys_active": 6.0,
+      "phys_islands": 5.0,
+      "phys_pairs": 5.0,
+      "static_max_mb": 84.8429698944092,
+      "static_mb": 84.7921466827393,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.914776802063
+    },
+    "R2_F3": {
+      "buffer_mb": 10.247428894043,
+      "nodes": 1549.0,
+      "objects": 5557.0,
+      "phys_active": 7.0,
+      "phys_islands": 6.0,
+      "phys_pairs": 6.0,
+      "static_max_mb": 84.8961544036865,
+      "static_mb": 84.8444385528564,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9150056838989
+    },
+    "R2_F4": {
+      "buffer_mb": 10.2730407714844,
+      "nodes": 793.0,
+      "objects": 3677.0,
+      "phys_active": 1.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 84.8961544036865,
+      "static_mb": 76.6223812103271,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9406175613403
+    },
+    "R2_开局": {
+      "buffer_mb": 10.2469711303711,
+      "nodes": 1520.0,
+      "objects": 5518.0,
+      "phys_active": 5.0,
+      "phys_islands": 4.0,
+      "phys_pairs": 4.0,
+      "static_max_mb": 84.7492847442627,
+      "static_mb": 84.7027263641357,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9145479202271
+    },
+    "R2_死亡结算": {
+      "buffer_mb": 10.2730407714844,
+      "nodes": 793.0,
+      "objects": 3670.0,
+      "phys_active": 0.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 84.8961544036865,
+      "static_mb": 76.6104907989502,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9406175613403
+    },
+    "R3_F2": {
+      "buffer_mb": 10.247200012207,
+      "nodes": 1548.0,
+      "objects": 5561.0,
+      "phys_active": 6.0,
+      "phys_islands": 6.0,
+      "phys_pairs": 6.0,
+      "static_max_mb": 84.9416370391846,
+      "static_mb": 84.8900356292725,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.914776802063
+    },
+    "R3_F3": {
+      "buffer_mb": 10.247428894043,
+      "nodes": 1544.0,
+      "objects": 5547.0,
+      "phys_active": 7.0,
+      "phys_islands": 6.0,
+      "phys_pairs": 6.0,
+      "static_max_mb": 84.9416370391846,
+      "static_mb": 84.8406352996826,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9150056838989
+    },
+    "R3_F4": {
+      "buffer_mb": 24.4936065673828,
+      "nodes": 785.0,
+      "objects": 3653.0,
+      "phys_active": 1.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 84.9416370391846,
+      "static_mb": 76.575159072876,
+      "texture_mb": 22.667576789856,
+      "video_mb": 47.1611833572388
+    },
+    "R3_开局": {
+      "buffer_mb": 10.2469711303711,
+      "nodes": 1513.0,
+      "objects": 5516.0,
+      "phys_active": 2.0,
+      "phys_islands": 1.0,
+      "phys_pairs": 1.0,
+      "static_max_mb": 84.8961544036865,
+      "static_mb": 84.6998805999756,
+      "texture_mb": 22.667576789856,
+      "video_mb": 32.9145479202271
+    },
+    "R3_死亡结算": {
+      "buffer_mb": 24.4936065673828,
+      "nodes": 785.0,
+      "objects": 3644.0,
+      "phys_active": 0.0,
+      "phys_islands": 0.0,
+      "phys_pairs": 0.0,
+      "static_max_mb": 84.9416370391846,
+      "static_mb": 76.5612697601318,
+      "texture_mb": 22.667576789856,
+      "video_mb": 47.1611833572388
+    }
+  },
+  "samples": 645,
+  "session_static_max_mb": 84.94
+}

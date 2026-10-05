@@ -1,0 +1,212 @@
+[
+  {
+    "id": "w_pistol",
+    "name": "旧手枪",
+    "tier": 1,
+    "damage": 8,
+    "fire_interval": 0.25,
+    "projectiles": 1,
+    "spread_deg": 0.0,
+    "bullet_speed": 520,
+    "pierce": 0,
+    "bullet_scale": 1.0,
+    "cost": 0,
+    "desc": "初始武器。伤害 8，0.25 秒一发。",
+    "sprites": [
+      "res://assets/art/weapons/w_00.png",
+      "res://assets/art/weapons/w_01.png",
+      "res://assets/art/weapons/w_06.png",
+      "res://assets/art/weapons/w_07.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_smg",
+    "name": "沙蝎冲锋枪",
+    "tier": 1,
+    "damage": 5,
+    "fire_interval": 0.1,
+    "projectiles": 1,
+    "spread_deg": 4.0,
+    "bullet_speed": 560,
+    "pierce": 0,
+    "bullet_scale": 0.9,
+    "cost": 90,
+    "desc": "极高射速，伤害低。",
+    "sprites": [
+      "res://assets/art/weapons/w_10.png",
+      "res://assets/art/weapons/w_11.png",
+      "res://assets/art/weapons/w_12.png",
+      "res://assets/art/weapons/w_10.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_shotgun",
+    "name": "铁砂散弹",
+    "tier": 1,
+    "damage": 5,
+    "fire_interval": 0.55,
+    "projectiles": 5,
+    "spread_deg": 26.0,
+    "bullet_speed": 420,
+    "pierce": 0,
+    "bullet_scale": 0.9,
+    "cost": 110,
+    "desc": "一次 5 发扇形，近距离极强。",
+    "sprites": [
+      "res://assets/art/weapons/w_01.png",
+      "res://assets/art/weapons/w_10.png",
+      "res://assets/art/weapons/w_11.png",
+      "res://assets/art/weapons/w_04.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_sniper",
+    "name": "风蚀狙击枪",
+    "tier": 2,
+    "damage": 26,
+    "fire_interval": 0.85,
+    "projectiles": 1,
+    "spread_deg": 0.0,
+    "bullet_speed": 900,
+    "pierce": 2,
+    "bullet_scale": 1.2,
+    "cost": 150,
+    "desc": "高伤、贯穿 2、弹速极快。",
+    "sprites": [
+      "res://assets/art/weapons/w_04.png",
+      "res://assets/art/weapons/w_05.png",
+      "res://assets/art/weapons/w_14.png",
+      "res://assets/art/weapons/w_15.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_spread",
+    "name": "散沙霰弹",
+    "tier": 2,
+    "damage": 7,
+    "fire_interval": 0.12,
+    "projectiles": 3,
+    "spread_deg": 34.0,
+    "bullet_speed": 460,
+    "pierce": 0,
+    "bullet_scale": 0.85,
+    "cost": 170,
+    "desc": "高频 3 发射击。",
+    "sprites": [
+      "res://assets/art/weapons/w_11.png",
+      "res://assets/art/weapons/w_13.png",
+      "res://assets/art/weapons/w_04.png",
+      "res://assets/art/weapons/w_05.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_railgun",
+    "name": "磁轨穿甲",
+    "tier": 3,
+    "damage": 58,
+    "fire_interval": 1.3,
+    "projectiles": 1,
+    "spread_deg": 0.0,
+    "bullet_speed": 1100,
+    "pierce": 6,
+    "bullet_scale": 1.5,
+    "cost": 260,
+    "desc": "贯穿 6 的重型弹丸，慢但能贯穿一整排。",
+    "sprites": [
+      "res://assets/art/weapons/w_13.png",
+      "res://assets/art/weapons/w_14.png",
+      "res://assets/art/weapons/w_15.png",
+      "res://assets/art/weapons/w_05.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_orb",
+    "name": "流沙法球",
+    "tier": 2,
+    "damage": 14,
+    "fire_interval": 0.42,
+    "projectiles": 1,
+    "spread_deg": 0.0,
+    "bullet_speed": 380,
+    "pierce": 0,
+    "bullet_scale": 1.8,
+    "cost": 180,
+    "desc": "大体积慢弹，命中范围大。",
+    "sprites": [
+      "res://assets/art/weapons/w_09.png",
+      "res://assets/art/weapons/w_09.png",
+      "res://assets/art/weapons/w_12.png",
+      "res://assets/art/weapons/w_09.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_venom",
+    "name": "蚀骨毒喷",
+    "tier": 3,
+    "damage": 11,
+    "fire_interval": 0.16,
+    "projectiles": 2,
+    "spread_deg": 16.0,
+    "bullet_speed": 480,
+    "pierce": 1,
+    "bullet_scale": 1.0,
+    "cost": 240,
+    "desc": "2 发高频贯穿弹。",
+    "sprites": [
+      "res://assets/art/weapons/w_10.png",
+      "res://assets/art/weapons/w_13.png",
+      "res://assets/art/weapons/w_14.png",
+      "res://assets/art/weapons/w_15.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_flame",
+    "name": "灼沙喷焰",
+    "tier": 3,
+    "damage": 6,
+    "fire_interval": 0.07,
+    "projectiles": 4,
+    "spread_deg": 40.0,
+    "bullet_speed": 380,
+    "pierce": 0,
+    "bullet_scale": 0.8,
+    "cost": 280,
+    "desc": "极近距离的弹幕地毯。",
+    "sprites": [
+      "res://assets/art/weapons/w_12.png",
+      "res://assets/art/weapons/w_04.png",
+      "res://assets/art/weapons/w_05.png",
+      "res://assets/art/weapons/w_15.png"
+    ],
+    "sprite_scale": 0.62
+  },
+  {
+    "id": "w_hunter",
+    "name": "游猎者",
+    "tier": 4,
+    "damage": 34,
+    "fire_interval": 0.2,
+    "projectiles": 3,
+    "spread_deg": 10.0,
+    "bullet_speed": 700,
+    "pierce": 3,
+    "bullet_scale": 1.2,
+    "cost": 380,
+    "desc": "高伤高频三连贯穿，终局武器。",
+    "sprites": [
+      "res://assets/art/weapons/w_03.png",
+      "res://assets/art/weapons/w_04.png",
+      "res://assets/art/weapons/w_13.png",
+      "res://assets/art/weapons/w_15.png"
+    ],
+    "sprite_scale": 0.62
+  }
+]

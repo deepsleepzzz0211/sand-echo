@@ -1,0 +1,43 @@
+# --- Godot 引擎缓存与导入结果 ---------------------------------------------
+# .godot/ 里是导入后的 .ctex / .import 缓存与 UID 映射，由引擎按需重建，
+# 入库会造成大量无意义 diff（每个贴图改动都会牵动二进制缓存）。
+# Godot 4 的导入结果全部落在这里，所以整个目录忽略。
+.godot/
+.import/
+
+# 导出配置含本机绝对路径与签名信息，不入库
+export.cfg
+export_presets.cfg
+
+# 导出产物
+build/
+dist/
+*.tmp
+*.tmp.*
+*.bak
+
+# --- 测试与工具产物 --------------------------------------------------------
+# check_godot_project.py --json 生成的报告，每次跑都会变
+check-report.json
+# wave_smoke / bar_probe / weapon_shot 等测试的截图落在 user://（工程外），此处兜底
+*.png.import.tmp
+/tests/output/
+/tests/screenshots/
+
+# --- 系统与编辑器 ----------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# --- 本地密钥与导出凭据（禁止明文入库）-------------------------------------
+*.keystore
+*.p12
+*.jks
+*.mobileprovision
+.env
+.env.*

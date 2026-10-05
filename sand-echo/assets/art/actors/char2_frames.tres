@@ -1,0 +1,64 @@
+[gd_resource type="SpriteFrames" load_steps=9 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/actors/char2_1.png" id="f0"]
+[ext_resource type="Texture2D" path="res://assets/art/actors/char2_2.png" id="f1"]
+[ext_resource type="Texture2D" path="res://assets/art/actors/char2_3.png" id="f2"]
+[ext_resource type="Texture2D" path="res://assets/art/actors/char2_4.png" id="f3"]
+[ext_resource type="Texture2D" path="res://assets/art/actors/char2_5.png" id="f4"]
+[ext_resource type="Texture2D" path="res://assets/art/actors/char2_6.png" id="f5"]
+[ext_resource type="Texture2D" path="res://assets/art/actors/char2_7.png" id="f6"]
+[ext_resource type="Texture2D" path="res://assets/art/actors/char2_8.png" id="f7"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f0")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("f1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f1")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("f2")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("f2")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("f6")
+}],
+"loop": true,
+"name": &"move",
+"speed": 12
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f5")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 8
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f3")
+}],
+"loop": false,
+"name": &"dead",
+"speed": 1
+}]

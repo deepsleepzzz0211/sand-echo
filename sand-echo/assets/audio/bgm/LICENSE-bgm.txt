@@ -1,0 +1,23 @@
+沙之回响 · BGM 授权与来源
+========================
+
+两条 BGM 均取自 OpenGameArt.org，协议为 CC0 1.0（Public Domain），
+可自由用于个人 / 教育 / 商业项目，无需署名（仍建议署名）。
+
+1. dungeon_loop.ogg
+   原曲：Desert Theme - 8bit Chiptune Theme
+   作者：Wolfgang_ (Ted Kerr)
+   来源：https://opengameart.org/content/desert-theme-8bit-chiptune-theme
+   协议：CC0（页面明确标注）
+   原文件：desertbounce-trimmed.wav（39.7s / 单声道 / 44.1kHz PCM）
+   本工程处理：转 Vorbis q3，保持单声道（保留 Famitracker 原始质感），时长 39.7s
+
+2. boss_battle.ogg
+   原曲：Great Boss
+   作者：Spring Spring (Julie Damsgaard / Spring Enterprises)
+   来源：https://opengameart.org/content/great-boss
+   协议：CC0（作者在评论区确认已改为纯 CC0，无需署名）
+   原文件：Great Boss.ogg（111.0s / 立体声）
+   本工程处理：转 Vorbis q3 立体声，时长 111.0s
+
+CC0 1.0 全文：https://creativecommons.org/publicdomain/zero/1.0/

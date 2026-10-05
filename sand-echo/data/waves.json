@@ -1,0 +1,731 @@
+{
+  "_comment": "波次表。设计依据 Brotato 官方 wiki（Waves / Enemies / Shop 页）：①数量线性：count = min(cap, base + step×(wave-1))，玩家明确要求线性增长；②血量线性：hp = base + hp_per_wave×(wave-1)（见 enemies.json），不用整体倍率，避免隐藏台阶；③Boss 波仍出杂兵（60% 数量），不清场——旧版 budget=0 导致第9→10波从34只掉到7只；④商店 tier 解锁门槛 T2第2波/T3第4波/T4第8波（见 shop.gd）。",
+  "rules": {
+    "boss_every": 10,
+    "max_concurrent": 40,
+    "spawn_interval": 0.12,
+    "gold_per_wave_base": 12,
+    "opening_burst": 5,
+    "count_base": 12,
+    "count_growth": 1.18,
+    "count_cap": 90,
+    "count_step": 3
+  },
+  "waves": [
+    {
+      "wave": 1,
+      "count": 12,
+      "pool": [
+        "e_chaser"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 2,
+      "count": 15,
+      "pool": [
+        "e_chaser"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 3,
+      "count": 18,
+      "pool": [
+        "e_chaser",
+        "e_shooter"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 4,
+      "count": 21,
+      "pool": [
+        "e_chaser",
+        "e_shooter"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 5,
+      "count": 24,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 6,
+      "count": 27,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 7,
+      "count": 30,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 8,
+      "count": 33,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 9,
+      "count": 36,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 10,
+      "count": 23,
+      "pool": [
+        "boss",
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": true,
+      "scale": 1.0
+    },
+    {
+      "wave": 11,
+      "count": 42,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 12,
+      "count": 45,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 13,
+      "count": 48,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 14,
+      "count": 51,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 15,
+      "count": 54,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 16,
+      "count": 57,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 17,
+      "count": 60,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 18,
+      "count": 63,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 19,
+      "count": 66,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 20,
+      "count": 41,
+      "pool": [
+        "boss",
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": true,
+      "scale": 1.0
+    },
+    {
+      "wave": 21,
+      "count": 72,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 22,
+      "count": 75,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 23,
+      "count": 78,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 24,
+      "count": 81,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 25,
+      "count": 84,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 26,
+      "count": 87,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 27,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 28,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 29,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 30,
+      "count": 54,
+      "pool": [
+        "boss",
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": true,
+      "scale": 1.0
+    },
+    {
+      "wave": 31,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 32,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 33,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 34,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 35,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 36,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 37,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 38,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 39,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 40,
+      "count": 54,
+      "pool": [
+        "boss",
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": true,
+      "scale": 1.0
+    },
+    {
+      "wave": 41,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 42,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 43,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 44,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 45,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 46,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 47,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 48,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 49,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 50,
+      "count": 54,
+      "pool": [
+        "boss",
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": true,
+      "scale": 1.0
+    },
+    {
+      "wave": 51,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 52,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 53,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 54,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 55,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 56,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 57,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 58,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 59,
+      "count": 90,
+      "pool": [
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": false,
+      "scale": 1.0
+    },
+    {
+      "wave": 60,
+      "count": 54,
+      "pool": [
+        "boss",
+        "e_chaser",
+        "e_shooter",
+        "e_burst",
+        "e_brute"
+      ],
+      "boss": true,
+      "scale": 1.0
+    }
+  ],
+  "_beyond_20": "第 21 波起按 wave 20 的 budget 每波 +3、scale 每 5 波 ×1.1 外推；每 10 波 Boss。"
+}

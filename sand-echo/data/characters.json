@@ -1,0 +1,28 @@
+[
+  {
+    "id": "char1",
+    "name": "沙行者",
+    "frames": "res://assets/art/actors/char1_frames.tres",
+    "desc": "均衡起点，没有短板也没有长处。",
+    "mods": {
+      "max_health": 0,
+      "damage": 0.0,
+      "move": 0,
+      "fire_rate": 0.0,
+      "gold_mult": 0.0
+    }
+  },
+  {
+    "id": "char2",
+    "name": "铁砂客",
+    "frames": "res://assets/art/actors/char2_frames.tres",
+    "desc": "更硬更慢：生命上限 +8、伤害 +15%，但移动速度 -15、射速 -10%。",
+    "mods": {
+      "max_health": 8,
+      "damage": 0.15,
+      "move": -30,
+      "fire_rate": -0.1,
+      "gold_mult": 0.0
+    }
+  }
+]

@@ -1,0 +1,187 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_menu"]
+[ext_resource type="StyleBox" path="res://assets/ui/panel_frame.tres" id="3_panel"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.169, 0.141, 0.216, 0.9)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.89, 0.757, 0.435, 0.7)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 26.0
+content_margin_top = 12.0
+content_margin_right = 26.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.278, 0.216, 0.325, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.847, 0.435, 0.95)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 26.0
+content_margin_top = 12.0
+content_margin_right = 26.0
+content_margin_bottom = 12.0
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.086, 0.067, 0.11, 1)
+
+[node name="MenuBox" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="MenuBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Title" type="Label" parent="MenuBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.89, 0.757, 0.435, 1)
+theme_override_colors/font_outline_color = Color(0.043, 0.035, 0.063, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 72
+text = "沙之回响"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="MenuBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.043, 0.035, 0.063, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+text = "Echoes of Sand"
+horizontal_alignment = 1
+
+[node name="Gap" type="Control" parent="MenuBox/VBox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="MetaPanel" type="PanelContainer" parent="MenuBox/VBox"]
+custom_minimum_size = Vector2(1000, 104)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = ExtResource("3_panel")
+
+[node name="MetaMargin" type="MarginContainer" parent="MenuBox/VBox/MetaPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 12
+
+[node name="MetaText" type="Label" parent="MenuBox/VBox/MetaPanel/MetaMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="CharRow" type="HBoxContainer" parent="MenuBox/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Char1" type="Button" parent="MenuBox/VBox/CharRow"]
+custom_minimum_size = Vector2(190, 96)
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "沙行者"
+
+[node name="Char2" type="Button" parent="MenuBox/VBox/CharRow"]
+custom_minimum_size = Vector2(190, 96)
+layout_mode = 2
+toggle_mode = true
+text = "铁砂客"
+
+[node name="CharInfo" type="Label" parent="MenuBox/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "均衡起点"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Start" type="Button" parent="MenuBox/VBox"]
+custom_minimum_size = Vector2(420, 66)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_font_sizes/font_size = 24
+text = "开始新一局"
+
+[node name="Upgrade" type="Button" parent="MenuBox/VBox"]
+custom_minimum_size = Vector2(420, 66)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_font_sizes/font_size = 24
+text = "永久升级"
+
+[node name="Quit" type="Button" parent="MenuBox/VBox"]
+custom_minimum_size = Vector2(420, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_font_sizes/font_size = 24
+text = "退出游戏"
+
+[node name="Controls" type="Label" parent="MenuBox/VBox"]
+custom_minimum_size = Vector2(900, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.7, 0.76, 1)
+theme_override_font_sizes/font_size = 24
+text = "移动 WASD / 方向键 / 左摇杆　　射击 鼠标左键 / J / 手柄 X　　闪避 空格 / Shift / 手柄 B　　互动 E / 手柄 A　　暂停 Esc"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="License" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -44.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.55, 0.53, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "素材 Kenney CC0 · OpenGameArt CC0 · Ark Pixel Font OFL　·　代码 MIT"
+horizontal_alignment = 1
+vertical_alignment = 1

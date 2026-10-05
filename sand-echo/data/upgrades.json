@@ -1,0 +1,182 @@
+[
+  {
+    "id": "r_atk",
+    "name": "锐沙之刃",
+    "kind": "stat",
+    "stat": "damage",
+    "value": 0.25,
+    "icon": "res://assets/art/upgrades/stat_up_1.png",
+    "desc": "伤害 +25%"
+  },
+  {
+    "id": "r_hp",
+    "name": "壁垒之骸",
+    "kind": "stat",
+    "stat": "max_health",
+    "value": 10,
+    "icon": "res://assets/art/upgrades/bar_1.png",
+    "desc": "生命上限 +10"
+  },
+  {
+    "id": "r_rate",
+    "name": "迅羽之砂",
+    "kind": "stat",
+    "stat": "fire_rate",
+    "value": 0.3,
+    "icon": "res://assets/art/upgrades/stat_up_2.png",
+    "desc": "射速 +30%"
+  },
+  {
+    "id": "r_move",
+    "name": "疾行之翼",
+    "kind": "stat",
+    "stat": "move",
+    "value": 15,
+    "icon": "res://assets/art/upgrades/icon_chevron.png",
+    "desc": "移动速度 +15"
+  },
+  {
+    "id": "r_multi",
+    "name": "千流散华",
+    "kind": "stat",
+    "stat": "multishot",
+    "value": 1,
+    "icon": "res://assets/art/upgrades/icon_tool.png",
+    "desc": "所有武器弹丸 +1"
+  },
+  {
+    "id": "r_spread",
+    "name": "散沙之弧",
+    "kind": "stat",
+    "stat": "spread",
+    "value": 24.0,
+    "icon": "res://assets/art/upgrades/stat_up_3.png",
+    "desc": "所有武器散布 +24°"
+  },
+  {
+    "id": "r_pierce",
+    "name": "穿沙之矛",
+    "kind": "stat",
+    "stat": "pierce",
+    "value": 1,
+    "icon": "res://assets/art/upgrades/icon_chevron2.png",
+    "desc": "所有武器贯穿 +1"
+  },
+  {
+    "id": "r_atk2",
+    "name": "炽砂之瞳",
+    "kind": "stat",
+    "stat": "damage",
+    "value": 0.4,
+    "icon": "res://assets/art/upgrades/icon_flame.png",
+    "desc": "伤害 +40%"
+  },
+  {
+    "id": "r_hp2",
+    "name": "磐岩之躯",
+    "kind": "stat",
+    "stat": "max_health",
+    "value": 20,
+    "icon": "res://assets/art/upgrades/bar_2.png",
+    "desc": "生命上限 +20"
+  },
+  {
+    "id": "r_ember",
+    "name": "余烬之心",
+    "kind": "stat",
+    "stat": "ember",
+    "value": 0.25,
+    "icon": "res://assets/art/upgrades/icon_gem.png",
+    "desc": "余烬获取 +25%"
+  },
+  {
+    "id": "r_heal",
+    "name": "甘泉之涌",
+    "kind": "stat",
+    "stat": "heal_wave",
+    "value": 5,
+    "icon": "res://assets/art/upgrades/bar_3.png",
+    "desc": "每波结束回复 5 生命"
+  },
+  {
+    "id": "r_rate2",
+    "name": "骤风之弦",
+    "kind": "stat",
+    "stat": "fire_rate",
+    "value": 0.5,
+    "icon": "res://assets/art/upgrades/stat_up_4.png",
+    "desc": "射速 +50%"
+  },
+  {
+    "id": "r_greed",
+    "name": "拾荒者之袋",
+    "kind": "stat",
+    "stat": "gold_mult",
+    "value": 0.3,
+    "icon": "res://assets/art/upgrades/icon_gem2.png",
+    "desc": "金币获取 +30%"
+  },
+  {
+    "id": "r_magnet",
+    "name": "贪砂之磁",
+    "kind": "stat",
+    "stat": "pickup",
+    "value": 1,
+    "icon": "res://assets/art/pickups/relic_icon_4.png",
+    "desc": "金币获取范围 +1"
+  },
+  {
+    "id": "r_crit",
+    "name": "致命一击",
+    "kind": "stat",
+    "stat": "crit",
+    "value": 0.1,
+    "icon": "res://assets/art/upgrades/stat_up_5.png",
+    "desc": "暴击率 +10%（双倍伤害）"
+  },
+  {
+    "id": "r_dodge",
+    "name": "虚影之步",
+    "kind": "stat",
+    "stat": "dash_cd",
+    "value": -0.15,
+    "icon": "res://assets/art/upgrades/stat_up_6.png",
+    "desc": "闪避冷却 -15%"
+  },
+  {
+    "id": "r_ember_up",
+    "name": "熔炉余温",
+    "kind": "stat",
+    "stat": "gold_mult",
+    "value": 0.25,
+    "icon": "res://assets/art/upgrades/icon_gem2.png",
+    "desc": "金币获取 +25%"
+  },
+  {
+    "id": "r_bulwark",
+    "name": "壁垒协议",
+    "kind": "stat",
+    "stat": "max_health",
+    "value": 15,
+    "icon": "res://assets/art/upgrades/bar_5.png",
+    "desc": "生命上限 +15"
+  },
+  {
+    "id": "r_swift",
+    "name": "迅捷之砂",
+    "kind": "stat",
+    "stat": "move",
+    "value": 10,
+    "icon": "res://assets/art/pickups/relic_icon_6.png",
+    "desc": "移动速度 +10"
+  },
+  {
+    "id": "r_edge",
+    "name": "锋刃打磨",
+    "kind": "stat",
+    "stat": "crit",
+    "value": 0.05,
+    "icon": "res://assets/art/upgrades/stat_up_4.png",
+    "desc": "暴击率 +5%（双倍伤害）"
+  }
+]

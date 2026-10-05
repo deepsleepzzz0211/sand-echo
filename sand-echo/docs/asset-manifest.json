@@ -1,0 +1,122 @@
+{
+  "version": 2,
+  "budget": {
+    "textureMemoryMB": 8
+  },
+  "rules": [
+    {
+      "name": "地块图集",
+      "glob": "assets/art/tiles/*.png",
+      "naming": "^desert_tiles$",
+      "maxSize": [
+        512,
+        512
+      ],
+      "bytesPerPixel": 4,
+      "required": true,
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "name": "角色帧",
+      "glob": "assets/art/actors/*.png",
+      "naming": "^((player|rival|char2)_[1-8]|enemy_(chaser|shooter|burst|boss)_[1-4])$",
+      "maxSize": [
+        64,
+        64
+      ],
+      "bytesPerPixel": 4,
+      "required": true,
+      "minCount": 1,
+      "maxCount": 40
+    },
+    {
+      "name": "特效帧",
+      "glob": "assets/art/fx/*.png",
+      "naming": "^(bullet_(player|enemy|t[2-5])|muzzle_flash|hit_spark|gun_orange|crosshair_[1-4])$",
+      "maxSize": [
+        64,
+        64
+      ],
+      "bytesPerPixel": 4,
+      "required": true,
+      "minCount": 3,
+      "maxCount": 16
+    },
+    {
+      "name": "拾取物图标",
+      "glob": "assets/art/pickups/*.png",
+      "naming": "^(relic_icon_[1-8]|potion)$",
+      "maxSize": [
+        32,
+        32
+      ],
+      "bytesPerPixel": 4,
+      "required": true,
+      "minCount": 8,
+      "maxCount": 9
+    },
+    {
+      "name": "界面图标",
+      "glob": "assets/art/ui/*.png",
+      "naming": "^(panel_(orange|purple)|bar_fill|bar_fill_blue|icon_(coin|skull|heart)|badge_alert)$",
+      "maxSize": [
+        32,
+        32
+      ],
+      "bytesPerPixel": 4,
+      "required": true,
+      "minCount": 6,
+      "maxCount": 10
+    },
+    {
+      "name": "工程图标",
+      "glob": "*.svg",
+      "naming": "^icon$",
+      "maxSize": [
+        256,
+        256
+      ],
+      "required": true,
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "name": "音效",
+      "glob": "assets/audio/sfx/*.ogg",
+      "naming": "^[a-z_]+$",
+      "required": true,
+      "minCount": 8,
+      "maxCount": 16
+    },
+    {
+      "name": "背景音乐",
+      "glob": "assets/audio/bgm/*.ogg",
+      "naming": "^(dungeon_loop|boss_battle)$",
+      "required": true,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "name": "中文字体",
+      "glob": "assets/ui/fonts/*.ttf",
+      "naming": "^ark-pixel-12px-proportional-(zh_hans|latin)$",
+      "required": true,
+      "minCount": 1,
+      "maxCount": 2
+    },
+    {
+      "name": "升级图标",
+      "dir": "assets/art/upgrades",
+      "note": "波间三选一的 20 项升级各用各的图，来源为 Kenney Interface（CC0）图标",
+      "glob": "assets/art/upgrades/*.png",
+      "naming": "^(stat_up_[1-6]|stat_down_[1-2]|bar_[1-5]|icon_[a-z0-9]+)$",
+      "maxCount": 19,
+      "maxSize": [
+        32,
+        32
+      ],
+      "bytesPerPixel": 4
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_game"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/pause_menu.tscn" id="3_pause"]
+[ext_resource type="PackedScene" path="res://scenes/death_screen.tscn" id="4_death"]
+[ext_resource type="PackedScene" path="res://scenes/shop.tscn" id="5_shop"]
+[ext_resource type="PackedScene" path="res://scenes/upgrade_screen.tscn" id="6_upg"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_game")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = false
+zoom = Vector2(2, 2)
+
+[node name="Hud" parent="." instance=ExtResource("2_hud")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_pause")]
+
+[node name="DeathScreen" parent="." instance=ExtResource("4_death")]
+
+[node name="ShopLayer" parent="." instance=ExtResource("5_shop")]
+
+[node name="UpgradeLayer" parent="." instance=ExtResource("6_upg")]

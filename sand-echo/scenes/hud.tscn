@@ -1,0 +1,254 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/icon_heart.png" id="3_heart"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/bar_fill.png" id="3_barfill"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/bar_fill_blue.png" id="3_barfill_blue"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/badge_alert.png" id="3_badge"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/icon_coin.png" id="4_coin"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.106, 0.09, 0.141, 0.82)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.761, 0.757, 0.839, 0.55)
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.16, 0.13, 0.2, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.106, 0.078, 0.129, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.753, 0.227, 0.169, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_gold"]
+bg_color = Color(0.945, 0.769, 0.059, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_dash"]
+bg_color = Color(0.298, 0.741, 0.851, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="Hud" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopLeft" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 480.0
+offset_bottom = 148.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Root/TopLeft"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HpRow" type="HBoxContainer" parent="Root/TopLeft/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="TextureRect" parent="Root/TopLeft/VBox/HpRow"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
+size_flags_vertical = 4
+texture_filter = 1
+texture = ExtResource("3_heart")
+stretch_mode = 5
+
+[node name="HpBar" type="ProgressBar" parent="Root/TopLeft/VBox/HpRow"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Alert" type="TextureRect" parent="Root/TopLeft/VBox/HpRow"]
+visible = false
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 4
+texture_filter = 1
+texture = ExtResource("3_badge")
+stretch_mode = 5
+
+[node name="HpText" type="Label" parent="Root/TopLeft/VBox/HpRow"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "20 / 20"
+horizontal_alignment = 2
+
+[node name="GoldRow" type="HBoxContainer" parent="Root/TopLeft/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Icon" type="TextureRect" parent="Root/TopLeft/VBox/GoldRow"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
+size_flags_vertical = 4
+texture_filter = 1
+texture = ExtResource("4_coin")
+stretch_mode = 5
+
+[node name="GoldBar" type="ProgressBar" parent="Root/TopLeft/VBox/GoldRow"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_gold")
+max_value = 200.0
+value = 0.0
+show_percentage = false
+
+[node name="GoldText" type="Label" parent="Root/TopLeft/VBox/GoldRow"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 2
+
+[node name="TopRight" type="VBoxContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -320.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = 240.0
+alignment = 2
+theme_override_constants/separation = 8
+
+[node name="WaveText" type="Label" parent="Root/TopRight"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.11, 0.09, 0.14, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
+text = "第 1 层"
+horizontal_alignment = 2
+
+[node name="AliveText" type="Label" parent="Root/TopRight"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.11, 0.09, 0.14, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "房间 0 / 0"
+horizontal_alignment = 2
+
+[node name="Toast" type="Label" parent="Root"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = -140.0
+offset_right = 360.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0.11, 0.09, 0.14, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BossBar" type="ProgressBar" parent="Root"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -70.0
+offset_right = 320.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_gold")
+value = 100.0
+show_percentage = false
+
+[node name="DashBar" type="ProgressBar" parent="Root"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -76.0
+offset_right = -32.0
+offset_bottom = -52.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_dash")
+value = 100.0
+show_percentage = false
+
+[node name="DashLabel" type="Label" parent="Root"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -112.0
+offset_right = -32.0
+offset_bottom = -80.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0.11, 0.09, 0.14, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "闪避"
+horizontal_alignment = 2
+vertical_alignment = 1

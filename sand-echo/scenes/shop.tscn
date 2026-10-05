@@ -1,0 +1,281 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/shop.gd" id="1_s"]
+[ext_resource type="Theme" path="res://assets/ui/ui_theme.tres" id="2_t"]
+
+[node name="Shop" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_s")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("2_t")
+mouse_filter = 2
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.106, 0.09, 0.141, 0.88)
+mouse_filter = 2
+[node name="Panel" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -330.0
+offset_right = 600.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
+
+mouse_filter = 2
+[node name="VBox" type="VBoxContainer" parent="Root/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+mouse_filter = 2
+[node name="Title" type="Label" parent="Root/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "沙漠商人"
+
+[node name="Gold" type="Label" parent="Root/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "持有金币 0"
+
+[node name="Offers" type="HBoxContainer" parent="Root/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+mouse_filter = 2
+[node name="Slot0" type="Button" parent="Root/Panel/VBox/Offers"]
+custom_minimum_size = Vector2(272, 260)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Root/Panel/VBox/Offers/Slot0"]
+texture_filter = 1
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 74.0
+offset_right = -96.0
+offset_bottom = -84.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Root/Panel/VBox/Offers/Slot0"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 12.0
+offset_right = -10.0
+offset_bottom = -46.0
+horizontal_alignment = 1
+vertical_alignment = 0
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "—"
+
+[node name="Cost" type="Label" parent="Root/Panel/VBox/Offers/Slot0"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -42.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "—"
+horizontal_alignment = 1
+
+[node name="Slot1" type="Button" parent="Root/Panel/VBox/Offers"]
+custom_minimum_size = Vector2(272, 260)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Root/Panel/VBox/Offers/Slot1"]
+texture_filter = 1
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 74.0
+offset_right = -96.0
+offset_bottom = -84.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Root/Panel/VBox/Offers/Slot1"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 12.0
+offset_right = -10.0
+offset_bottom = -46.0
+horizontal_alignment = 1
+vertical_alignment = 0
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "—"
+
+[node name="Cost" type="Label" parent="Root/Panel/VBox/Offers/Slot1"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -42.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "—"
+horizontal_alignment = 1
+
+[node name="Slot2" type="Button" parent="Root/Panel/VBox/Offers"]
+custom_minimum_size = Vector2(272, 260)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Root/Panel/VBox/Offers/Slot2"]
+texture_filter = 1
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 74.0
+offset_right = -96.0
+offset_bottom = -84.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Root/Panel/VBox/Offers/Slot2"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 12.0
+offset_right = -10.0
+offset_bottom = -46.0
+horizontal_alignment = 1
+vertical_alignment = 0
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "—"
+
+[node name="Cost" type="Label" parent="Root/Panel/VBox/Offers/Slot2"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -42.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "—"
+horizontal_alignment = 1
+
+[node name="Slot3" type="Button" parent="Root/Panel/VBox/Offers"]
+custom_minimum_size = Vector2(272, 260)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Root/Panel/VBox/Offers/Slot3"]
+texture_filter = 1
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 74.0
+offset_right = -96.0
+offset_bottom = -84.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Root/Panel/VBox/Offers/Slot3"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 12.0
+offset_right = -10.0
+offset_bottom = -46.0
+horizontal_alignment = 1
+vertical_alignment = 0
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "—"
+
+[node name="Cost" type="Label" parent="Root/Panel/VBox/Offers/Slot3"]
+mouse_filter = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -42.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "—"
+horizontal_alignment = 1
+
+[node name="OwnedTitle" type="Label" parent="Root/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "我的武器（点击卖掉换金币）"
+
+[node name="Owned" type="HBoxContainer" parent="Root/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Hint" type="Label" parent="Root/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "点击商品购买，或按「继续」进入下一波"
+horizontal_alignment = 1
+
+[node name="Continue" type="Button" parent="Root/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "继续（空格）"

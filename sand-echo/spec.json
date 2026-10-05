@@ -1,0 +1,25 @@
+{
+  "requiredDirs": ["scenes", "scripts", "assets"],
+  "recommendedDirs": ["data", "autoload", "docs", "tests"],
+  "requiredFiles": ["project.godot"],
+  "requireImportMeta": true,
+  "scanAbsolutePaths": true,
+  "scanDanglingRefs": true,
+  "refAllowlist": [],
+  "checkAssetSpec": true,
+  "assetManifest": "docs/asset-manifest.json",
+  "requireFrozenDesign": true,
+  "traceMarker": "@trace",
+  "ignore": [
+    {
+      "check": "importPairing",
+      "path": "docs/screenshots/*",
+      "reason": "docs/screenshots 是交付用的截图证据，目录内已放 .gdignore 让 Godot 引擎完全跳过；离线检查器不解析 .gdignore，因此在这里显式排除，粒度只限这一个目录。"
+    },
+    {
+      "check": "assetSpec",
+      "path": "docs/screenshots/*",
+      "reason": "同上：截图不是游戏资源，不参与贴图命名/尺寸/预算核对。"
+    }
+  ]
+}

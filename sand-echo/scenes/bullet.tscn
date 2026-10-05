@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_bullet"]
+[ext_resource type="Texture2D" path="res://assets/art/fx/bullet_player.png" id="2_tex"]
+
+[node name="Bullet" type="Area2D"]
+collision_layer = 8
+collision_mask = 4
+z_index = 5
+script = ExtResource("1_bullet")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_tex")

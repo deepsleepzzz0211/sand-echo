@@ -1,0 +1,25 @@
+# --- 工作区根 .gitignore ---------------------------------------------------
+# 工程本体的忽略规则在 sand-echo/.gitignore（.godot/ 缓存、导出配置等）。
+# 这里只管工作区根级别的外部工具与生成物。
+
+# 下载来的技能包与工具链，不属于本项目源码
+/_tools/
+/godot-game-suite.zip
+
+# check_godot_project.py --json 生成，每次跑都变
+/check-report.json
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.vscode/
+.idea/
+
+# 本地密钥
+.env
+.env.*
+*.keystore
+*.p12
