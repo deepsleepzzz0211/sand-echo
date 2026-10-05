@@ -18,7 +18,6 @@ var _duration_cap := 45.0     ## 兜底：无论帧率多低，最多跑这么�
 
 ## 运行期状态
 var _game: Node2D = null
-var _room: Arena = null
 var _arena: Rect2 = Rect2()
 var _bullets: Array[Bullet] = []
 var _enemies: Array[Enemy] = []
@@ -75,8 +74,16 @@ func _build_scene() -> void:
 	get_tree().root.add_child(_game)
 	await get_tree().process_frame
 	await get_tree().process_frame
-	_room = _game.get("room") as Arena
-	_arena = _room.interior_rect()
+	# game.gd 的成员是 arena（不是旧房间制的 room）。这里必须硬失败：
+	# 之前写成 _game.get("room") 得到 null，紧接着调 interior_rect() 报错中断，
+	# 但脚本仍以退出码 0 结束 —— 一个「什么都没测却显示通过」的假绿，
+	# 比红结果更危险（PLAT-003 的性能结论就靠这个脚本产）。
+	var arena_node: Arena = _game.get("arena") as Arena
+	if arena_node == null:
+		push_error("压测：Game 上取不到 arena（成员名是否又改了？），负载没搭起来")
+		get_tree().quit(2)
+		return
+	_arena = arena_node.interior_rect()
 	# 压测期间玩家不掉血，否则场景会被死亡结算接管，负载就变了
 	RunState.max_health = 99999
 	RunState.health = 99999

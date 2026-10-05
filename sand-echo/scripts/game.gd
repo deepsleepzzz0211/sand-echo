@@ -69,12 +69,9 @@ func _load_static() -> void:
 	var path := "res://assets/art/tiles/desert_tileset.tres"
 	if ResourceLoader.exists(path):
 		_tileset_res = load(path) as TileSet
-	var f := FileAccess.open("res://data/enemies.json", FileAccess.READ)
-	if f != null:
-		var parsed: Variant = JSON.parse_string(f.get_as_text())
-		f.close()
-		if parsed is Array:
-			_enemy_stats = parsed
+	var parsed: Variant = RunState.read_json("res://data/enemies.json")
+	if parsed is Array:
+		_enemy_stats = parsed
 
 
 ## 单屏竞技场只建一次：没有过门，也就没有切房帧（这是换掉房间制的核心收益）

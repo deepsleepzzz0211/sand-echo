@@ -312,21 +312,17 @@ func wave_def(wave: int) -> Dictionary:
 
 
 func wave_rules() -> Dictionary:
-	var f := FileAccess.open("res://data/waves.json", FileAccess.READ)
-	if f == null:
-		return {"boss_every": 10, "max_concurrent": 40, "spawn_interval": 0.45, "gold_per_wave_base": 12}
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
-	f.close()
-	return (parsed as Dictionary).get("rules", {}) if parsed is Dictionary else {}
+	var parsed: Variant = read_json("res://data/waves.json")
+	if not (parsed is Dictionary):
+		return {"boss_every": 10, "max_concurrent": 40, "spawn_interval": 0.12, "opening_burst": 5, "gold_per_wave_base": 12}
+	return (parsed as Dictionary).get("rules", {})
 
 
 func _wave_rows() -> Array:
-	var f := FileAccess.open("res://data/waves.json", FileAccess.READ)
-	if f == null:
+	var parsed: Variant = read_json("res://data/waves.json")
+	if not (parsed is Dictionary):
 		return []
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
-	f.close()
-	return (parsed as Dictionary).get("waves", []) if parsed is Dictionary else []
+	return (parsed as Dictionary).get("waves", [])
 
 
 func next_wave() -> void:
@@ -491,13 +487,33 @@ func table(name: String) -> Array:
 	return []
 
 
+## 读取 res:// 下的 JSON 数据表。
+##
+## 为什么两条路都试：Godot 4 起 JSON 被当作资源（godotengine/godot#65295），
+## 但本工程的 data/*.json 没有 .import 文件、而 ResourceLoader.exists() 又返回 true，
+## 编辑器里两种方式都读得通—— 只有导出后才能区分。若 JSON 走资源管线被打包成 .res，
+## 则 FileAccess.open("res://data/waves.json") 返回 null，
+## 于是升级池 / 武器表 / 波次表全空、游戏直接卡死。
+## 先 FileAccess 后 ResourceLoader，两种打包行为下都能工作。
+func read_json(path: String) -> Variant:
+	var f: FileAccess = FileAccess.open(path, FileAccess.READ)
+	if f != null:
+		var text: String = f.get_as_text()
+		f.close()
+		var parsed: Variant = JSON.parse_string(text)
+		if parsed != null:
+			return parsed
+	# 回退：走资源管线（导出后 JSON 被转成 .res 时才走到这里）
+	if ResourceLoader.exists(path):
+		var j: JSON = ResourceLoader.load(path) as JSON
+		if j != null:
+			return j.data
+	push_error("RunState：数据表读不到 %s" % path)
+	return null
+
+
 func _load_table(path: String) -> Array:
-	var f := FileAccess.open(path, FileAccess.READ)
-	if f == null:
-		push_error("RunState：数据表读不到 %s" % path)
-		return []
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
-	f.close()
+	var parsed: Variant = read_json(path)
 	return parsed as Array if parsed is Array else []
 
 

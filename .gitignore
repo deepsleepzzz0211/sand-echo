@@ -9,6 +9,9 @@
 # check_godot_project.py --json 生成，每次跑都变
 /check-report.json
 
+# 代理/会话工具的运行记录，不是项目源码
+/.workbuddy/
+
 # 系统与编辑器
 .DS_Store
 Thumbs.db

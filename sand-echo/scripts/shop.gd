@@ -42,12 +42,9 @@ func _ready() -> void:
 		_icons.append(get_node(NodePath("Root/Panel/VBox/Offers/Slot%d/Icon" % i)) as TextureRect)
 		_slots[i].pressed.connect(_on_slot_pressed.bind(i))
 	_continue.pressed.connect(_on_continue)
-	var f := FileAccess.open("res://data/weapons.json", FileAccess.READ)
-	if f != null:
-		var parsed: Variant = JSON.parse_string(f.get_as_text())
-		f.close()
-		if parsed is Array:
-			_weapon_rows = parsed
+	var parsed: Variant = RunState.read_json("res://data/weapons.json")
+	if parsed is Array:
+		_weapon_rows = parsed
 
 
 # 注意：参数名不能叫 _gold —— 会遮蔽同名的成员变量 _gold: Label，

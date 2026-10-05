@@ -5,9 +5,12 @@
 .godot/
 .import/
 
-# 导出配置含本机绝对路径与签名信息，不入库
+# 仅 export.cfg 不入库（老惯例，可能带本机绝对路径）。
+# 注意：export_presets.cfg 是「导出配方」，属于源码，必须入库 ——
+# 忽略它会导致新克隆无法导出、CI 无法导出，且 x86_64 / PCK 内嵌 /
+# include_filter=*.json 这些关键设置无从追溯。签名凭据另走 *.pfx/*.p12
+# 与 codesign/enable，本文件本身不含密钥。
 export.cfg
-export_presets.cfg
 
 # 导出产物
 build/
