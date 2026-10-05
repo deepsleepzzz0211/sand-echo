@@ -1,5 +1,5 @@
 extends Node2D
-# @trace MECH-001, MECH-003, SIG-001, SIG-002, SIG-005, SCENE-002, LEV-001, AUD-002, ART-003, WAVE-001, WPN-001, UPG-001, SHOP-001
+# @trace MECH-001, MECH-003, MECH-004, MECH-009, SCENE-001, SIG-001, SIG-002, SIG-005, SCENE-002, LEV-001, AUD-002, ART-003, WAVE-001, WAVE-002, WAVE-003, WPN-001, WPN-002, UPG-001, SHOP-001, FLOW-004
 # 单局主控：Brotato 式波次循环（@trace WAVE-001）。
 #
 # 【本轮重构】房间地牢制 → 单屏竞技场 + 波次
@@ -13,12 +13,12 @@ extends Node2D
 #   ├─ Camera2D             ← zoom 固定 2.0，不再跟随（单屏竞技场整体可见）
 #   ├─ Hud                  ← 波次 / 血条 / 金币 / 武器栏
 #   ├─ ShopLayer            ← 商店面板（@trace SHOP-001）
-#   ├─ UpgradeLayer         ← 三选一面板（@trace UPG-001）
+#   └─ UpgradeLayer         ← 三选一面板（@trace UPG-001）
 #   ├─ PauseMenu
 #   └─ DeathScreen
 
 const ENEMY_SCENE: PackedScene = preload("res://scenes/enemy.tscn")
-const RELIC_DROP_CHANCE := 0.0   # 遗物已并入三选一池，不再随机掉落（@trace UPG-001）
+const RELIC_DROP_CHANCE := 0.0   # @trace UPG-001, NUM-005 —— 遗物已并入三选一池，不再随机掉落
 const POTION_DROP_CHANCE := 0.0  # 回复改为商店商品
 const BOSS_TARGET_FIGHT_SECONDS := 20.0
 const BOSS_COEF_BASE := 6.0

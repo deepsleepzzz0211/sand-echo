@@ -1,6 +1,6 @@
 class_name Arena
 extends Node2D
-# @trace WAVE-001, ART-001, ART-002, COL-001, LEV-002
+# @trace WAVE-001, WAVE-002, ART-001, ART-002, COL-001, LEV-001, LEV-002
 # 单屏竞技场（@trace WAVE-001）。取代原来的「随机生长树地牢 + 传送门房间」。
 #
 # 【为什么换掉房间制】

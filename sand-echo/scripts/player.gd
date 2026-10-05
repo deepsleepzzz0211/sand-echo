@@ -1,6 +1,6 @@
 class_name Player
 extends CharacterBody2D
-# @trace MECH-002, UI-002, ART-002, NUM-001, SIG-002, COL-001
+# @trace MECH-002, MECH-008, COL-001, COL-002, ART-004, WPN-001, WPN-003, UI-002, UI-004, NUM-001, NUM-002, PLAT-001
 # 玩家角色（弹幕射击战斗 + 闪避无敌帧）。
 # 碰撞层语义（project.godot [layer_names]）：本体 = player 层，只与世界层做移动碰撞；
 # 受击判定交给 Hurtbox 子区域（enemy 层），攻击判定交给 Bullet（player_bullet 层）。
@@ -298,7 +298,7 @@ func _update_sprite() -> void:
 		_sprite.play("idle")
 
 
-# --- 持枪外观（Brotato 式环形挂载）--------------------------------------------
+# 持枪外观（Brotato 式环形挂载）@trace ART-004, WPN-003
 # 素材包PNG/Weapons/Tiles 的前 20 张是枪械本体（0020-0039 是弹幕/准星图案）。
 # 接进来之前 weapons.json 里没有任何贴图字段，10 把武器全无外观 —— 买了新武器
 # 看起来和原来那把一模一样。现在每把武器按 tier 取对应贴图，升级会换枪。

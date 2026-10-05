@@ -1,5 +1,5 @@
 extends CanvasLayer
-# @trace SHOP-001, UI-002
+# @trace SHOP-001, WPN-001, WPN-002, ART-004, UPG-001, NUM-003
 # 波间商店（@trace SHOP-001）。Brotato 肉鸽闭环的另一半：**花钱变强**。
 # 原工程完全没有消费环节（审计确认零 shop 标识），金币只能躺到死。
 #

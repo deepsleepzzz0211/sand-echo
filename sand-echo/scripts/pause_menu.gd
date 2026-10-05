@@ -1,5 +1,5 @@
 extends CanvasLayer
-# @trace FLOW-001, UI-001, PLAT-002, FLOW-003
+# @trace FLOW-001, FLOW-003, FLOW-004, UI-001, PLAT-002, AUD-003, MECH-009
 # 暂停界面（场景跳转）。process_mode = ALWAYS，能在 get_tree().paused 时接收输入。
 # 数据入口：Game.setup(game) / set_paused()；数据出口：EventBus + 场景切换。
 

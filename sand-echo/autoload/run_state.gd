@@ -1,5 +1,5 @@
 extends Node
-# @trace MECH-001, MECH-004, MECH-005, NUM-001, NUM-002, NUM-003, SIG-001, SIG-002, SCENE-002, WAVE-001, WPN-001, UPG-001
+# @trace WPN-001, WPN-002, WPN-003, UPG-001, NUM-001, NUM-003, SIG-001, SIG-002, SCENE-002, MECH-005, MECH-006
 # 单局可变状态（@trace SCENE-002）。
 # 谁写：Game / Player / Enemy / Weapon / UpgradeScreen；谁读：HUD / Shop / UpgradeScreen / DeathScreen / MetaProgress。
 # 何时清：reset_run()（每局开始）。

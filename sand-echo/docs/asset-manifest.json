@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "budget": {
     "textureMemoryMB": 8
   },
@@ -116,6 +116,19 @@
         32,
         32
       ],
+      "bytesPerPixel": 4
+    },
+    {
+      "name": "武器形态",
+      "glob": "assets/art/weapons/*.png",
+      "minCount": 20,
+      "maxCount": 20,
+      "maxSize": [
+        24,
+        24
+      ],
+      "naming": "^w_\\d{2}$",
+      "required": true,
       "bytesPerPixel": 4
     }
   ]

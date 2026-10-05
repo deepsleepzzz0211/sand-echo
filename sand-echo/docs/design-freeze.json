@@ -1,56 +1,320 @@
 {
-  "version": 4,
+  "version": 5,
   "status": "frozen",
   "frozenAt": "2026-10-05",
   "project": "沙之回响 Echoes of Sand",
   "changeLog": [
     "v2：按 v1 评审意见调整：占位素材全部替换、素材映射逐条绑定、AudioStreamPlayer 池化、UI-003 卡片悬停反馈；生成脚本移出仓库共 8 项，未动红线",
     "v3（2026-10-03）：补齐 AUD-002 BGM 与 ART-003 击杀反馈；缺口重分类为「本地实测」，新增 AUD-003（BGM/音效直接挂节点）",
-    "v4（2026-10-05）：按用户要求参照《土豆兄弟》重构核心循环。房间地牢制 → 单屏竞技场 + 波次制，新增 WAVE-001 / WPN-001 / UPG-001 / SHOP-001；遗物并入升级池；LEV-002 / SCENE-001 / SIG-004 / MECH-008 / NUM-005 按新口径改写；PLAT-003 已实测"
+    "v4（2026-10-05）：按用户要求参照《土豆兄弟》重构核心循环。房间地牢制 → 单屏竞技场 + 波次制，新增 WAVE-001 / WPN-001 / UPG-001 / SHOP-001；遗物并入升级池；LEV-002 / SCENE-001 / SIG-004 / MECH-008 / NUM-005 按新口径改写；PLAT-003 已实测",
+    "v5（2026-10-05）：本轮实机反馈驱动的修正。WAVE-002/003 波次数量与血量改为线性（修 count 倒退与 Boss 波断崖）；WPN-002 武器回收（解决 6 把满级后彻底卡死）；WPN-003 tier 差异化（此前只有伤害变化）；ART-004 武器贴图接入与环形挂载；MECH-009 顿帧限频与真实秒数；FLOW-004 ESC 暂停职责拆分；UI-004 多发弹丸最小发散角。另将 MECH-003/004/008、NUM-005 标记为已废弃（房间制与遗物/药水系统已删除），SIG-003/004/005、UI-003、SCENE-001、LEV-001/002 按新口径改写；SIG-004 与 hitstop_requested 标注为死信号待清理"
   ],
   "items": [
-    { "id": "WAVE-001", "type": "mechanic", "name": "波次制核心循环：单屏竞技场，清完一波 → 三选一升级 → 商店 → 下一波；每 10 波为 Boss 波（budget 表驱动，第 21 波起公式外推）", "confirmed": true },
-    { "id": "WPN-001", "type": "mechanic", "name": "武器系统：最多携带 6 把，各自独立冷却与射速；购买同 id 升等级（1→4），等级每级 +25% 伤害；弹丸数/散布/贯穿受全局升级加成", "confirmed": true },
-    { "id": "UPG-001", "type": "mechanic", "name": "波间三选一：每波结束给 3 个候选（从 17 项升级池抽），必须选一个才能继续，不可跳过——这是 roguelite 决策的核心", "confirmed": true },
-    { "id": "SHOP-001", "type": "mechanic", "name": "波间商店：4 个商品位（武器 / 属性小件 / 回复），花金币购买；买不起自动置灰、售出后禁用；空格或点「继续」进入下一波", "confirmed": true },
-    { "id": "PLAT-001", "type": "platform", "name": "主平台桌面端（Win/macOS/Linux），设计分辨率 1920×1080，像素整数缩放 + 等比适配，横屏", "confirmed": true },
-    { "id": "PLAT-002", "type": "platform", "name": "完全开源、无商业变现，MIT 协议", "confirmed": true },
-    { "id": "PLAT-003", "type": "platform", "name": "目标帧率 60fps（同屏 ≤40 单位、弹幕 ≤300 发）需实机验证", "confirmed": true },
-    { "id": "ART-001", "type": "art", "name": "沙漠像素调色板（沙色 #E3C16F / 沙丘影 #C29B52 / 晴空蓝 #3A7CA5 / 血红 #C0392B / 余烬金 #F1C40F / 骨白 #EDE6D6）", "confirmed": true },
-    { "id": "ART-002", "type": "art", "name": "真实素材绑定：Kenney Desert Shooter Pack(CC0)，地块图集 16×16 间距 1px，角色 24×24，最近邻过滤", "confirmed": true },
-    { "id": "ART-003", "type": "art", "name": "中文字体：Ark Pixel Font 12px 比例版（OFL-1.1），关闭抗锯齿与 hinting，字号一律取 12 的整数倍保证像素锐利", "confirmed": true },
-    { "id": "AUD-001", "type": "audio", "name": "音效：射击/命中/敌人死亡/Boss登场/受伤/拾取/闪避/死亡/UI 共 12 条，取自素材包", "confirmed": true },
-    { "id": "AUD-002", "type": "audio", "name": "BGM 两条：地牢循环 39.7s + Boss 战 111.0s，OpenGameArt CC0，0.8s 交叉淡入切换", "confirmed": true },
-    { "id": "AUD-003", "type": "audio", "name": "BGM 与音效可在暂停界面分别静音（process_mode=ALWAYS 下仍可操作）", "confirmed": true },
-    { "id": "MECH-001", "type": "mechanic", "name": "核心循环（三层：微循环/单局循环/长线循环）", "confirmed": true },
-    { "id": "MECH-002", "type": "mechanic", "name": "弹幕射击战斗（射击冷却 0.25s + 闪避无敌帧 0.30s / 冷却 0.90s，闪避优先于射击）", "confirmed": true },
-    { "id": "MECH-003", "type": "mechanic", "name": "房间制地牢生成与门（单屏房间、清场开门、Boss 房锁门）", "confirmed": true },
-    { "id": "MECH-004", "type": "mechanic", "name": "遗物 / Build 构筑（12 种遗物，实时改属性）", "confirmed": true },
-    { "id": "MECH-005", "type": "mechanic", "name": "生命与死亡结算（本局统计 + 再来一局）", "confirmed": true },
-    { "id": "MECH-006", "type": "mechanic", "name": "元进度继承（余烬 → 永久升级，重启后生效）", "confirmed": true },
-    { "id": "MECH-007", "type": "mechanic", "name": "敌人 AI（追击 / 拉开距离 / 环绕 + 远程弹幕）", "confirmed": true },
-    { "id": "MECH-008", "type": "mechanic", "name": "药水 / 消耗品（回复生命，掉落率 25%）", "confirmed": true },
-    { "id": "NUM-001", "type": "numeric", "name": "伤害公式（base=8 × 成长倍率，钳制下限 1）", "confirmed": true },
-    { "id": "NUM-002", "type": "numeric", "name": "成长曲线锚点（1 层 HP20 / base8 / 移速200 / 射速4发每秒）", "confirmed": true },
-    { "id": "NUM-003", "type": "numeric", "name": "经济三件套与元进度（每怪 2–8 金、Boss 40 金；金币×0.5 转余烬；升级 baseCost50 ×1.5^等级，软上限 10 级，每级 +6% 伤害）", "confirmed": true },
-    { "id": "NUM-004", "type": "numeric", "name": "Boss 血量公式（玩家 EDPS × 20s × 系数 1.5–3.0，上限 40000）", "confirmed": true },
-    { "id": "NUM-005", "type": "numeric", "name": "遗物掉率（清场 70% 掉遗物、25% 掉药水；遗物池 12 种）", "confirmed": true },
-    { "id": "LEV-001", "type": "level", "name": "逐层难度波形（房间数 5→10、敌人种类 1→4、Boss 系数 1.5→3.0）", "confirmed": true },
-    { "id": "LEV-002", "type": "level", "name": "房间尺寸口径（内部 112×58 tile，墙厚 2 tile，整间 116×62 tile = 1856×992 px，固定正交相机单屏容纳）", "confirmed": true },
-    { "id": "SCENE-001", "type": "scene", "name": "场景切分：main_menu / game / room / player / enemy / bullet / relic / potion / hud / pause_menu / death_screen", "confirmed": true },
-    { "id": "SCENE-002", "type": "scene", "name": "Autoload 仅四个：RunState(单局状态) / MetaProgress(元进度存档) / EventBus(全局事件) / Sfx(播放服务)", "confirmed": true },
-    { "id": "SIG-001", "type": "signal", "name": "RunState 血量/金币/楼层/遗物/统计信号", "confirmed": true },
-    { "id": "SIG-002", "type": "signal", "name": "RunState 死亡信号 player_died", "confirmed": true },
-    { "id": "SIG-003", "type": "signal", "name": "EventBus 房间事件 room_entered / room_cleared", "confirmed": true },
-    { "id": "SIG-004", "type": "signal", "name": "EventBus 遗物拾取 relic_picked", "confirmed": true },
-    { "id": "SIG-005", "type": "signal", "name": "表现层事件 hitstop_requested / shake_requested / toast_requested（表现与逻辑解耦）", "confirmed": true },
-    { "id": "FLOW-001", "type": "flow", "name": "场景切换：主菜单 ↔ 游戏 ↔ 死亡结算 ↔ 元进度", "confirmed": true },
-    { "id": "FLOW-002", "type": "flow", "name": "存档 user:// 原子写（临时文件 + 改名）", "confirmed": true },
-    { "id": "FLOW-003", "type": "flow", "name": "暂停：Esc/手柄 Start 切换 get_tree().paused，暂停界面与结算界面 process_mode=ALWAYS", "confirmed": true },
-    { "id": "UI-001", "type": "ui", "name": "主菜单 / HUD / 死亡结算 信息架构", "confirmed": true },
-    { "id": "UI-002", "type": "ui", "name": "输入映射（move/aim/shoot/dash/interact/pause/ui_confirm，键鼠 + 手柄双套）", "confirmed": true },
-    { "id": "UI-003", "type": "ui", "name": "HUD 含 HP 条、金币、楼层、房间进度、小地图、闪避冷却、Boss 血条、提示条", "confirmed": true },
-    { "id": "COL-001", "type": "physics", "name": "碰撞层命名：1 world / 2 player / 3 enemy / 4 player_bullet / 5 enemy_bullet / 6 pickup（代码只用层名语义，不裸写层号）", "confirmed": true },
-    { "id": "COL-002", "type": "physics", "name": "受击判定走 Hurtbox 子区域（Area2D），本体 CharacterBody2D 只管移动碰撞", "confirmed": true }
+    {
+      "id": "WAVE-001",
+      "type": "mechanic",
+      "name": "波次制核心循环：单屏竞技场，清完一波 → 三选一升级 → 商店 → 下一波；每 10 波为 Boss 波（Boss 波仍出 60% 数量的杂兵，不清场）",
+      "confirmed": true
+    },
+    {
+      "id": "WPN-001",
+      "type": "mechanic",
+      "name": "武器系统：最多携带 6 把，各自独立冷却与射速；购买同 id 升等级（1→4，MAX_TIER=4 满级后拒绝再投入），升级不占新槽位；已满级武器不再进商店池",
+      "confirmed": true
+    },
+    {
+      "id": "UPG-001",
+      "type": "mechanic",
+      "name": "波间三选一：每波结束给 3 个候选（从 20 项升级池抽，v4 时为 17 项），必须选一个才能继续，不可跳过；池内不得有效果完全重复的两项",
+      "confirmed": true
+    },
+    {
+      "id": "SHOP-001",
+      "type": "mechanic",
+      "name": "波间商店：4 个商品位，配比 [武器, 武器, 属性小件, 回复]（v4 时只有 1 个武器位）；买不起置灰、售出后禁用；空格或点击「继续」进入下一波",
+      "confirmed": true
+    },
+    {
+      "id": "PLAT-001",
+      "type": "platform",
+      "name": "主平台桌面端（Win/macOS/Linux），设计分辨率 1920×1080，像素整数缩放 + 等比适配，横屏",
+      "confirmed": true
+    },
+    {
+      "id": "PLAT-002",
+      "type": "platform",
+      "name": "完全开源、无商业变现，MIT 协议",
+      "confirmed": true
+    },
+    {
+      "id": "PLAT-003",
+      "type": "platform",
+      "name": "目标帧率 60fps（同屏 ≤40 单位、弹幕 ≤300 发）需实机验证",
+      "confirmed": true
+    },
+    {
+      "id": "ART-001",
+      "type": "art",
+      "name": "沙漠像素调色板（沙色 #E3C16F / 沙丘影 #C29B52 / 晴空蓝 #3A7CA5 / 血红 #C0392B / 余烬金 #F1C40F / 骨白 #EDE6D6）",
+      "confirmed": true
+    },
+    {
+      "id": "ART-002",
+      "type": "art",
+      "name": "真实素材绑定：Kenney Desert Shooter Pack(CC0)，地块图集 16×16 间距 1px，角色 24×24，最近邻过滤",
+      "confirmed": true
+    },
+    {
+      "id": "ART-003",
+      "type": "art",
+      "name": "中文字体：Ark Pixel Font 12px 比例版（OFL-1.1），关闭抗锯齿与 hinting，字号一律取 12 的整数倍保证像素锐利",
+      "confirmed": true
+    },
+    {
+      "id": "AUD-001",
+      "type": "audio",
+      "name": "音效：射击/命中/敌人死亡/Boss登场/受伤/拾取/闪避/死亡/UI 共 12 条，取自素材包",
+      "confirmed": true
+    },
+    {
+      "id": "AUD-002",
+      "type": "audio",
+      "name": "BGM 两条：地牢循环 39.7s + Boss 战 111.0s，OpenGameArt CC0，0.8s 交叉淡入切换",
+      "confirmed": true
+    },
+    {
+      "id": "AUD-003",
+      "type": "audio",
+      "name": "BGM 与音效可在暂停界面分别静音（process_mode=ALWAYS 下仍可操作）",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-001",
+      "type": "mechanic",
+      "name": "核心循环（三层：微循环/单局循环/长线循环）",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-002",
+      "type": "mechanic",
+      "name": "弹幕射击战斗（射击冷却 0.25s + 闪避无敌帧 0.30s / 冷却 0.90s，闪避优先于射击）",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-003",
+      "type": "mechanic",
+      "name": "已废弃：房间制地牢生成与门（单屏房间、清场开门、Boss 房锁门）。dungeon.gd / dungeon_room.gd / room.tscn 已删除，由单屏竞技场取代",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-004",
+      "type": "mechanic",
+      "name": "已废弃：独立遗物系统（12 种遗物 + relics.json）。遗物已并入 upgrades.json 升级池，现共 20 项；relic.gd / relics.json 已删除",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-005",
+      "type": "mechanic",
+      "name": "生命与死亡结算（本局统计 + 再来一局）",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-006",
+      "type": "mechanic",
+      "name": "元进度继承（余烬 → 永久升级，重启后生效）",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-007",
+      "type": "mechanic",
+      "name": "敌人 AI（追击 / 拉开距离 / 环绕 + 远程弹幕）",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-008",
+      "type": "mechanic",
+      "name": "已废弃：药水 / 消耗品系统。potion.gd 已删除；回复改为商店里的「沙泉」商品位",
+      "confirmed": true
+    },
+    {
+      "id": "NUM-001",
+      "type": "numeric",
+      "name": "伤害公式（base=8 × 成长倍率，钳制下限 1）",
+      "confirmed": true
+    },
+    {
+      "id": "NUM-002",
+      "type": "numeric",
+      "name": "成长曲线锚点（1 层 HP20 / base8 / 移速200 / 射速4发每秒）",
+      "confirmed": true
+    },
+    {
+      "id": "NUM-003",
+      "type": "numeric",
+      "name": "经济三件套与元进度（每怪 2–8 金、Boss 40 金；金币×0.5 转余烬；升级 baseCost50 ×1.5^等级，软上限 10 级，每级 +6% 伤害）",
+      "confirmed": true
+    },
+    {
+      "id": "NUM-004",
+      "type": "numeric",
+      "name": "Boss 血量公式（玩家 EDPS × 20s × 系数 1.5–3.0，上限 40000）",
+      "confirmed": true
+    },
+    {
+      "id": "NUM-005",
+      "type": "numeric",
+      "name": "已废弃：遗物掉率（清场 70% 掉遗物、25% 掉药水）。遗物与药水系统均已移除",
+      "confirmed": true
+    },
+    {
+      "id": "LEV-001",
+      "type": "level",
+      "name": "逐波难度波形：敌人种类按波次解锁（1 波沙蜥 / 3 波加沙炮手 / 5 波加喷沙者 / 7 波加甲壳兽），Boss 每 10 波一次；v4 的「房间数 5→10」口径随房间制移除",
+      "confirmed": true
+    },
+    {
+      "id": "LEV-002",
+      "type": "level",
+      "name": "竞技场尺寸口径：内部 52×29 tile（832×464 px）+ 墙厚 2 tile → 整场 896×528 px；摄像机 zoom=2.0 → 可视 960×540 完整包住，角色 24px→屏幕 48px",
+      "confirmed": true
+    },
+    {
+      "id": "SCENE-001",
+      "type": "scene",
+      "name": "场景切分：main_menu / game / player / enemy / bullet / hud / shop / upgrade_screen / pause_menu / death_screen（v4 的 room.tscn 已随房间制删除）",
+      "confirmed": true
+    },
+    {
+      "id": "SCENE-002",
+      "type": "scene",
+      "name": "Autoload 仅四个：RunState(单局状态) / MetaProgress(元进度存档) / EventBus(全局事件) / Sfx(播放服务)",
+      "confirmed": true
+    },
+    {
+      "id": "SIG-001",
+      "type": "signal",
+      "name": "RunState 血量/金币/楼层/遗物/统计信号",
+      "confirmed": true
+    },
+    {
+      "id": "SIG-002",
+      "type": "signal",
+      "name": "RunState 死亡信号 player_died",
+      "confirmed": true
+    },
+    {
+      "id": "SIG-003",
+      "type": "signal",
+      "name": "EventBus 波次事件 wave_started(wave, is_boss) / wave_cleared(wave)（v4 的 room_entered / room_cleared 随房间制一同移除）",
+      "confirmed": true
+    },
+    {
+      "id": "SIG-004",
+      "type": "signal",
+      "name": "已废弃：EventBus.relic_picked 随遗物系统并入升级池后无人发射、无人订阅（死信号，待清理）",
+      "confirmed": true
+    },
+    {
+      "id": "SIG-005",
+      "type": "signal",
+      "name": "表现层事件 shake_requested / toast_requested / hud_refresh_requested / enemy_killed / boss_spawned；hitstop_requested 已移除（顿帧改由 game.gd 直接管理，见 MECH-009）",
+      "confirmed": true
+    },
+    {
+      "id": "FLOW-001",
+      "type": "flow",
+      "name": "场景切换：主菜单 ↔ 游戏 ↔ 死亡结算 ↔ 元进度",
+      "confirmed": true
+    },
+    {
+      "id": "FLOW-002",
+      "type": "flow",
+      "name": "存档 user:// 原子写（临时文件 + 改名）",
+      "confirmed": true
+    },
+    {
+      "id": "FLOW-003",
+      "type": "flow",
+      "name": "暂停：Esc/手柄 Start 切换 get_tree().paused，暂停界面与结算界面 process_mode=ALWAYS",
+      "confirmed": true
+    },
+    {
+      "id": "UI-001",
+      "type": "ui",
+      "name": "主菜单 / HUD / 死亡结算 信息架构",
+      "confirmed": true
+    },
+    {
+      "id": "UI-002",
+      "type": "ui",
+      "name": "输入映射（move/aim/shoot/dash/interact/pause/ui_confirm，键鼠 + 手柄双套）",
+      "confirmed": true
+    },
+    {
+      "id": "UI-003",
+      "type": "ui",
+      "name": "HUD 含 HP 条与低血告警、金币、波次、存活数、Boss 血条、闪避冷却、提示条；v4 的小地图随房间制移除（minimap.gd 已删除）",
+      "confirmed": true
+    },
+    {
+      "id": "COL-001",
+      "type": "physics",
+      "name": "碰撞层命名：1 world / 2 player / 3 enemy / 4 player_bullet / 5 enemy_bullet / 6 pickup（代码只用层名语义，不裸写层号）",
+      "confirmed": true
+    },
+    {
+      "id": "COL-002",
+      "type": "physics",
+      "name": "受击判定走 Hurtbox 子区域（Area2D），本体 CharacterBody2D 只管移动碰撞",
+      "confirmed": true
+    },
+    {
+      "id": "WAVE-002",
+      "type": "mechanic",
+      "name": "波次数量线性：count = min(90, 12 + 3×(wave-1))。v4 用「budget 点数 + cost 贪心购买」，cost=2 的甲壳兽会挤掉一只沙蜥导致第 6→7 波只数反而下降，且 Boss 波 budget=0 造成 34→7→36 的双重断崖",
+      "confirmed": true
+    },
+    {
+      "id": "WAVE-003",
+      "type": "numeric",
+      "name": "敌人血量线性成长：hp = base + hp_per_wave×(wave-1)，hp_per_wave 沙蜥 9 / 沙炮手 7 / 喷沙者 12 / 甲壳兽 22。v4 用 base×scale，而 scale 在第 1~9 波为缺省、第 11 波突然 1.15，形成玩家看不见的血量台阶",
+      "confirmed": true
+    },
+    {
+      "id": "WPN-002",
+      "type": "mechanic",
+      "name": "武器回收：累计投入的 50% 退款（floor，下限 1 金），卖出即腾出槽位；至少保留一把。退款不吃 gold_mult（那是获取金币的加成，卖东西不应被自己的加成放大）；报价按投入额而非当前商店价，因商店价随波次通胀",
+      "confirmed": true
+    },
+    {
+      "id": "WPN-003",
+      "type": "numeric",
+      "name": "tier 差异化表（下标 = tier-1）：伤害 ×1.00/1.25/1.50/1.75（既有红线，本轮未动）、射速间隔 ×1.00/0.92/0.85/0.78、贯穿 +0/+0/+1/+2、散布 ×1.00/0.95/0.90/0.85、弹丸尺寸 ×1.00/1.06/1.12/1.20、额外弹丸 +1（仅基础弹丸≥2 的多发武器）。v4 的 tier 只放大伤害，其余维度从 T1 到 T4 完全不变",
+      "confirmed": true
+    },
+    {
+      "id": "ART-004",
+      "type": "art",
+      "name": "武器贴图接入：素材包 PNG/Weapons/Tiles 的前 20 张为枪械本体（0020–0039 是弹幕/准星图案，非武器），接入 assets/art/weapons/w_00..19.png；每把武器配 4 张 tier 序列 + 分级染色（白→金橙）；场上环形挂载（整圈均分、枪口统一指向瞄准方向）、商店商品位显示图标",
+      "confirmed": true
+    },
+    {
+      "id": "MECH-009",
+      "type": "mechanic",
+      "name": "打击顿帧分级与限频：普通命中 time_scale 0.55 / 0.03s / 冷却 90ms，击杀 0.25 / 0.07s / 冷却 170ms，复用同一 Tween 且 set_ignore_time_scale(true)，冷却用墙钟而非 delta。v4 每次命中都压 time_scale=0.15 且 Tween 受其影响，0.05s 实际走 0.33s；灼沙喷焰 T4 每秒触发 91 次，净效果是近乎永久慢动作",
+      "confirmed": true
+    },
+    {
+      "id": "FLOW-004",
+      "type": "flow",
+      "name": "ESC 暂停职责拆分：Game(PAUSABLE) 只负责按下暂停，解除暂停由 PauseMenu(process_mode=ALWAYS) 接手——Game 把自己 pause 后即收不到 _unhandled_input，否则按 ESC 暂停成功却退不出来",
+      "confirmed": true
+    },
+    {
+      "id": "UI-004",
+      "type": "ui",
+      "name": "多发弹丸最小发散角 7°（MULTISHOT_MIN_STEP_DEG）：spread_deg=0 的武器（初始手枪/狙击/轨道炮/法球）拿到「弹丸+1」后所有弹丸角度完全重叠、看起来只有一颗",
+      "confirmed": true
+    }
   ]
 }
