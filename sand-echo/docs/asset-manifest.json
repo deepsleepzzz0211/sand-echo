@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "budget": {
     "textureMemoryMB": 8
   },
@@ -33,7 +33,7 @@
     {
       "name": "特效帧",
       "glob": "assets/art/fx/*.png",
-      "naming": "^(bullet_(player|enemy|t[2-5])|muzzle_flash|hit_spark|gun_orange|crosshair_[1-4])$",
+      "naming": "^(bullet_(player|enemy|solo|t[2-5])|muzzle_flash|hit_spark|gun_orange|crosshair_[1-4])$",
       "maxSize": [
         64,
         64
