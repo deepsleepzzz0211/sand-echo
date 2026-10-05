@@ -66,8 +66,9 @@ text = ""
 horizontal_alignment = 1
 
 [node name="Relics" type="Label" parent="Root/Panel/VBox"]
-custom_minimum_size = Vector2(0, 120)
+custom_minimum_size = Vector2(760, 120)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 24
 text = ""
 horizontal_alignment = 1

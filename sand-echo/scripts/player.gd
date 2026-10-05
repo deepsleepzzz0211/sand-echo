@@ -1,6 +1,6 @@
 class_name Player
 extends CharacterBody2D
-# @trace MECH-002, MECH-008, COL-001, COL-002, ART-004, WPN-001, WPN-003, UI-002, UI-004, NUM-001, NUM-002, PLAT-001
+# @trace MECH-002, COL-001, COL-002, ART-004, WPN-001, WPN-003, UI-002, UI-004, NUM-001, NUM-002, PLAT-001
 # 玩家角色（弹幕射击战斗 + 闪避无敌帧）。
 # 碰撞层语义（project.godot [layer_names]）：本体 = player 层，只与世界层做移动碰撞；
 # 受击判定交给 Hurtbox 子区域（enemy 层），攻击判定交给 Bullet（player_bullet 层）。

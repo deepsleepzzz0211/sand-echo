@@ -1,5 +1,5 @@
 extends Node
-# @trace SCENE-002, FLOW-001, WAVE-001, UPG-001, SIG-004
+# @trace SCENE-002, FLOW-001, WAVE-001, UPG-001
 # 全局事件总线（@trace SCENE-002）。只放跨场景「解耦通知」：
 # 谁写：任何场景/脚本；谁读：HUD、商店、三选一、场景层、特效层；何时清：本节点随引擎常驻，
 # 信号连接随场景销毁自动断开。
@@ -21,7 +21,6 @@ signal upgrade_chosen(id: String)
 signal shop_opened(weapons: Array, gold: int)
 signal weapon_added(id: String, tier: int)
 
-signal relic_picked(relic_id: String)
 signal player_hurt(amount: int)
 signal enemy_killed(enemy_id: String, gold_reward: int)
 signal boss_spawned(boss_name: String)

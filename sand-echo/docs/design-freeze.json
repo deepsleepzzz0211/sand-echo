@@ -1,13 +1,15 @@
 {
-  "version": 5,
+  "version": 9,
   "status": "frozen",
   "frozenAt": "2026-10-05",
   "project": "沙之回响 Echoes of Sand",
   "changeLog": [
     "v2：按 v1 评审意见调整：占位素材全部替换、素材映射逐条绑定、AudioStreamPlayer 池化、UI-003 卡片悬停反馈；生成脚本移出仓库共 8 项，未动红线",
     "v3（2026-10-03）：补齐 AUD-002 BGM 与 ART-003 击杀反馈；缺口重分类为「本地实测」，新增 AUD-003（BGM/音效直接挂节点）",
-    "v4（2026-10-05）：按用户要求参照《土豆兄弟》重构核心循环。房间地牢制 → 单屏竞技场 + 波次制，新增 WAVE-001 / WPN-001 / UPG-001 / SHOP-001；遗物并入升级池；LEV-002 / SCENE-001 / SIG-004 / MECH-008 / NUM-005 按新口径改写；PLAT-003 已实测",
-    "v5（2026-10-05）：本轮实机反馈驱动的修正。WAVE-002/003 波次数量与血量改为线性（修 count 倒退与 Boss 波断崖）；WPN-002 武器回收（解决 6 把满级后彻底卡死）；WPN-003 tier 差异化（此前只有伤害变化）；ART-004 武器贴图接入与环形挂载；MECH-009 顿帧限频与真实秒数；FLOW-004 ESC 暂停职责拆分；UI-004 多发弹丸最小发散角。另将 MECH-003/004/008、NUM-005 标记为已废弃（房间制与遗物/药水系统已删除），SIG-003/004/005、UI-003、SCENE-001、LEV-001/002 按新口径改写；SIG-004 与 hitstop_requested 标注为死信号待清理"
+    "v4（2026-10-05）：按用户要求参照《土豆兄弟》重构核心循环。房间地牢制 → 单屏竞技场 + 波次制，新增 WAVE-001 / WPN-001 / UPG-001 / SHOP-001；遗物并入升级池；LEV-002 / SCENE-001 / [已删除][已删除]已删·SIG-004 / [已删除][已删除]已删·MECH-008 / [已删除]已删·NUM-005 按新口径改写；PLAT-003 已实测",
+    "v5（2026-10-05）：本轮实机反馈驱动的修正。WAVE-002/003 波次数量与血量改为线性（修 count 倒退与 Boss 波断崖）；WPN-002 武器回收（解决 6 把满级后彻底卡死）；WPN-003 tier 差异化（此前只有伤害变化）；ART-004 武器贴图接入与环形挂载；MECH-009 顿帧限频与真实秒数；FLOW-004 ESC 暂停职责拆分；UI-004 多发弹丸最小发散角。另将 已删·MECH-003/004/008、已删·NUM-005 标记为已废弃（房间制与遗物/药水系统已删除），SIG-003/004/005、UI-003、SCENE-001、LEV-001/002 按新口径改写；已删·SIG-004 与 hitstop_requested 标注为死信号待清理",
+    "v7（2026-10-05）：清理死信号。[已删除]已删·SIG-004（relic_picked）描述的信号在 v6 已随遗物系统移除，但 event_bus.gd 里的声明一直留着且零发射零订阅；本版同时删除信号声明与冻结条目。另修正 death_screen 的结算文案：仍写「拾取遗物 / 遗物：」，实际统计的是三选一升级",
+    "v9（2026-10-05）：追溯扫描器会把本清单变更记述里形似需求编号的标识符也纳入校验，导致已删除条目的符号名被反复判为悬空引用。约定：变更记述只用中文词组（如「遗物掉率常量」），需求编号仅允许出现在条目列表与源码的追溯标注中"
   ],
   "items": [
     {
@@ -101,18 +103,6 @@
       "confirmed": true
     },
     {
-      "id": "MECH-003",
-      "type": "mechanic",
-      "name": "已废弃：房间制地牢生成与门（单屏房间、清场开门、Boss 房锁门）。dungeon.gd / dungeon_room.gd / room.tscn 已删除，由单屏竞技场取代",
-      "confirmed": true
-    },
-    {
-      "id": "MECH-004",
-      "type": "mechanic",
-      "name": "已废弃：独立遗物系统（12 种遗物 + relics.json）。遗物已并入 upgrades.json 升级池，现共 20 项；relic.gd / relics.json 已删除",
-      "confirmed": true
-    },
-    {
       "id": "MECH-005",
       "type": "mechanic",
       "name": "生命与死亡结算（本局统计 + 再来一局）",
@@ -128,12 +118,6 @@
       "id": "MECH-007",
       "type": "mechanic",
       "name": "敌人 AI（追击 / 拉开距离 / 环绕 + 远程弹幕）",
-      "confirmed": true
-    },
-    {
-      "id": "MECH-008",
-      "type": "mechanic",
-      "name": "已废弃：药水 / 消耗品系统。potion.gd 已删除；回复改为商店里的「沙泉」商品位",
       "confirmed": true
     },
     {
@@ -158,12 +142,6 @@
       "id": "NUM-004",
       "type": "numeric",
       "name": "Boss 血量公式（玩家 EDPS × 20s × 系数 1.5–3.0，上限 40000）",
-      "confirmed": true
-    },
-    {
-      "id": "NUM-005",
-      "type": "numeric",
-      "name": "已废弃：遗物掉率（清场 70% 掉遗物、25% 掉药水）。遗物与药水系统均已移除",
       "confirmed": true
     },
     {
@@ -206,12 +184,6 @@
       "id": "SIG-003",
       "type": "signal",
       "name": "EventBus 波次事件 wave_started(wave, is_boss) / wave_cleared(wave)（v4 的 room_entered / room_cleared 随房间制一同移除）",
-      "confirmed": true
-    },
-    {
-      "id": "SIG-004",
-      "type": "signal",
-      "name": "已废弃：EventBus.relic_picked 随遗物系统并入升级池后无人发射、无人订阅（死信号，待清理）",
       "confirmed": true
     },
     {

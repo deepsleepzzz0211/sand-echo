@@ -1,5 +1,5 @@
 extends Node2D
-# @trace MECH-001, MECH-003, MECH-004, MECH-009, SCENE-001, SIG-001, SIG-002, SIG-005, SCENE-002, LEV-001, AUD-002, ART-003, WAVE-001, WAVE-002, WAVE-003, WPN-001, WPN-002, UPG-001, SHOP-001, FLOW-004
+# @trace MECH-001, MECH-009, SCENE-001, SIG-001, SIG-002, SIG-005, SCENE-002, LEV-001, AUD-002, ART-003, WAVE-001, WAVE-002, WAVE-003, WPN-001, WPN-002, UPG-001, SHOP-001, FLOW-004
 # 单局主控：Brotato 式波次循环（@trace WAVE-001）。
 #
 # 【本轮重构】房间地牢制 → 单屏竞技场 + 波次
@@ -18,8 +18,6 @@ extends Node2D
 #   └─ DeathScreen
 
 const ENEMY_SCENE: PackedScene = preload("res://scenes/enemy.tscn")
-const RELIC_DROP_CHANCE := 0.0   # @trace UPG-001, NUM-005 —— 遗物已并入三选一池，不再随机掉落
-const POTION_DROP_CHANCE := 0.0  # 回复改为商店商品
 const BOSS_TARGET_FIGHT_SECONDS := 20.0
 const BOSS_COEF_BASE := 6.0
 const BOSS_COEF_PER_WAVE := 0.6

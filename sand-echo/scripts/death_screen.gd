@@ -6,7 +6,7 @@ extends CanvasLayer
 @onready var _root: Control = $Root
 @onready var _ember: Label = $Root/Panel/VBox/Ember
 @onready var _stats: Label = $Root/Panel/VBox/Stats
-@onready var _relics: Label = $Root/Panel/VBox/Relics
+@onready var _upgrades: Label = $Root/Panel/VBox/Relics  # 节点名沿用 Relics，实际展示三选一升级
 @onready var _again: Button = $Root/Panel/VBox/Again
 @onready var _menu: Button = $Root/Panel/VBox/Menu
 
@@ -18,27 +18,27 @@ func _ready() -> void:
 
 func show_summary(ember_gained: int, summary: Dictionary) -> void:
 	_ember.text = "余烬 +%d（累计 %d）" % [ember_gained, _meta_ember()]
-	_stats.text = "抵达 第 %d 层　　清理房间 %d　　击杀 %d\n拾取遗物 %d　　承受伤害 %d" % [
+	_stats.text = "抵达 第 %d 层　　清理房间 %d　　击杀 %d\n三选一 %d 项　　承受伤害 %d" % [
 		int(summary.get("wave", 1)),
 		int(summary.get("waves_cleared", 0)),
 		int(summary.get("enemies_killed", 0)) + int(summary.get("bosses_killed", 0)),
 		int(summary.get("upgrades_taken", 0)),
 		int(summary.get("damage_taken", 0)),
 	]
-	_relics.text = _relic_lines()
+	_upgrades.text = _upgrade_lines()
 	_root.visible = true
 	_again.grab_focus()
 	Sfx.play("death", -2.0, 0.9, 0.0)
 
 
-func _relic_lines() -> String:
+func _upgrade_lines() -> String:
 	if RunState.upgrades.is_empty():
-		return "本局未拾取遗物"
+		return "本局未选任何强化"
 	var names: Array[String] = []
 	for id in RunState.upgrades:
 		var def: Dictionary = RunState.upgrade_def(id)
 		names.append("%s（%s）" % [String(def.get("name", id)), String(def.get("desc", ""))])
-	return "遗物：\n" + "、".join(names)
+	return "强化：\n" + "、".join(names)  # Label 已开自动换行
 
 
 func _meta_ember() -> int:
