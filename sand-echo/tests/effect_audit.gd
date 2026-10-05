@@ -48,6 +48,7 @@ func _audit_upgrades() -> void:
 		"crit": "crit_chance",
 		"dash_cd": "dash_cd_mult",
 		"heal_wave": "heal_per_wave",
+		"lifesteal": "lifesteal",
 	}
 	for entry in RunState.table("upgrades"):
 		var d := entry as Dictionary

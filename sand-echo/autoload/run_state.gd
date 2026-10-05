@@ -48,6 +48,8 @@ var pickup_range: float = 1.0
 var crit_chance: float = 0.0
 var dash_cd_mult: float = 1.0
 var heal_per_wave: int = 0
+## 吸血：按造成伤害的比例回复生命（@trace NUM-006 吸血派生值）
+var lifesteal: float = 0.0
 var upgrades: Array[String] = []
 var weapons: Array[Dictionary] = []
 var stats: Dictionary = {}
@@ -105,8 +107,13 @@ func _recalc_derived() -> void:
 	crit_chance = 0.0
 	dash_cd_mult = 1.0
 	heal_per_wave = 0
+	lifesteal = 0.0
 	for id in upgrades:
 		_apply_upgrade(upgrade_def(id))
+	# 浮点归整：0.15 + 0.30 在二进制浮点里是 0.44999999999999996，
+	# 于是 floor(100 x 0.4499999) = 44 而不是 45 —— 面板写着 45% 实际少回 1 点。
+	# 累加完成后统一收敛到 4 位小数，让显示值与实际效果一致。
+	lifesteal = snappedf(lifesteal, 0.0001)
 	_apply_character()
 	var mp := _meta()
 	if mp != null:
@@ -172,6 +179,8 @@ func _apply_upgrade(def: Dictionary) -> void:
 			dash_cd_mult = maxf(0.25, dash_cd_mult + float(def.get("value", 0.0)))
 		"heal_wave":
 			heal_per_wave += int(def.get("value", 0.0))
+		"lifesteal":
+			lifesteal += float(def.get("value", 0.0))
 	stats_changed.emit()
 
 
@@ -422,6 +431,18 @@ func heal(amount: int) -> void:
 		return
 	health = mini(max_health, health + maxi(0, amount))
 	health_changed.emit(health, max_health)
+
+
+## 按伤害吸血：返回实际回复量，供表现层飘字。
+## 钳到至少 1 点是有意的：低伤害武器（如初始手枪 8 伤害）在 8% 下取整为 0，
+## 玩家会拿到属性却完全看不到任何反馈。不足 1 点时给 1 点，让效果立刻可感知。
+## 不吃任何倍率——吸血是「战斗中的回复」，不该被余烬/金币那套经济加成影响。
+func heal_from_damage(damage: int) -> int:
+	if dead or lifesteal <= 0.0 or damage <= 0:
+		return 0
+	var before := health
+	heal(maxi(1, int(floor(float(damage) * lifesteal))))
+	return health - before
 
 
 func add_gold(amount: int) -> void:

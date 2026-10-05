@@ -17,6 +17,9 @@ const MUZZLE_OFFSET := 16.0
 # 拿到「弹丸+1」后所有弹丸会重叠在同一点，玩家看不出变化。
 const MULTISHOT_MIN_STEP_DEG := 7.0
 const MUZZLE_TEX: Texture2D = preload("res://assets/art/fx/muzzle_flash.png")
+## 吸血飘字用绿色，与伤害飘字的暖红色区分（@trace UI-001）
+const LIFESTEAL_TINT := Color(0.45, 1.0, 0.5, 1.0)
+const FXPopup: Script = preload("res://scripts/fx_popup.gd")
 # 准星按武器等级换色，与弹丸配色一致，玩家一眼知道自己手上这把枪几级
 const AIM_TEX := [
 	preload("res://assets/art/fx/crosshair_1.png"),
@@ -240,6 +243,9 @@ func _fire_weapon(def: Dictionary, tier: int) -> void:
 		var b := _bullet_scene.instantiate() as Bullet
 		b.setup(aim_dir.rotated(angle), dmg, Bullet.Owner.PLAYER, pierce)
 		b.set_tier(tier)
+		# 吸血接入点：bullet 的 hit_target 信号一直没人连接，
+		# 所以此前无法在「玩家造成伤害」这一层做任何事。
+		b.hit_target.connect(_on_bullet_hit)
 		b.speed = speed
 		b.call("set_weapon_scale", RunState.weapon_bullet_scale(def, tier))
 		b.position = global_position + aim_dir.rotated(angle) * MUZZLE_OFFSET
@@ -250,6 +256,21 @@ func _fire_weapon(def: Dictionary, tier: int) -> void:
 		RunState.bump_stat("shots_fired", 1)
 	_muzzle_flash()
 	Sfx.play("shoot", -10.0, randf_range(0.94, 1.08), 0.02)
+
+
+## 弹丸命中：吸血在此结算（@trace NUM-006）。
+## 挂在 bullet 的 hit_target 上而不是敌人的 damaged 上有两个好处：
+## ① 穿透弹每穿透一个目标各触发一次，符合吸血语义；
+## ② 逻辑留在玩家模块内，不必让敌人知道自己被吸血了。
+func _on_bullet_hit(_target: Area2D, damage: int) -> void:
+	if state == State.DEAD:
+		return
+	var healed := RunState.heal_from_damage(damage)
+	if healed <= 0:
+		return
+	var parent := get_parent()
+	if parent != null:
+		FXPopup.spawn(parent, global_position, "+%d" % healed, LIFESTEAL_TINT)
 
 
 ## 枪口闪光：用上此前一直闲置的 muzzle_flash.png（素材审计里的未用项）

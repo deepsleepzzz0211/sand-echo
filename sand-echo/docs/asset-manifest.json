@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "budget": {
     "textureMemoryMB": 8
   },
@@ -110,8 +110,8 @@
       "dir": "assets/art/upgrades",
       "note": "波间三选一的 20 项升级各用各的图，来源为 Kenney Interface（CC0）图标",
       "glob": "assets/art/upgrades/*.png",
-      "naming": "^(stat_up_[1-6]|stat_down_[1-2]|bar_[1-5]|icon_[a-z0-9]+)$",
-      "maxCount": 19,
+      "naming": "^(stat_up_[1-6]|stat_down_[1-2]|bar_[1-5]|icon_[a-z0-9_]+)$",
+      "maxCount": 21,
       "maxSize": [
         32,
         32
