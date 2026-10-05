@@ -42,7 +42,7 @@ func _audit_color_distance() -> void:
 	var le := 0.2126 * ec.r + 0.7152 * ec.g + 0.0722 * ec.b
 	_ok(lp != le, "敌我亮度不同（玩家 %.2f / 敌人 %.2f）" % [lp, le])
 	# 饱和度方向相反：玩家偏暖（红>蓝），敌人偏冷/品红（蓝>绿）
-	_ok(pc.r > pc.b, "玩家弹偏暖色（红 %.2f > 蓝 %.2f）" % [pc.r, pc.b])
+	_ok(pc.r > pc.b, "玩家基准色偏暖（红 %.2f > 蓝 %.2f），已烘焙进贴图" % [pc.r, pc.b])
 	_ok(ec.b > ec.g, "敌人弹偏品红/冷色（蓝 %.2f > 绿 %.2f）" % [ec.b, ec.g])
 	_ok(pc.r - pc.b > 0.3 and ec.b - ec.g > 0.2,
 		"敌我色相方向相反，肉眼不会混淆")
@@ -70,7 +70,20 @@ func _audit_shape() -> void:
 	_ok(opaque > 0, "弹丸贴图非空（%d 个不透明像素）" % opaque)
 	# 单颗子弹应当是紧凑小团；若宽高都接近 20 则说明是散射图案
 	var w := xmax - xmin + 1
-	_ok(w <= 8, "弹丸横向宽度 %d px（散射图案会是 18~20 px）" % w)
+	_ok(w <= 8, "敌人弹丸横向宽度 %d px（散射图案会是 18~20 px）" % w)
+	# 玩家弹丸也必须是正常弹丸形状，不再是枪械图
+	var pimg := preload("res://assets/art/fx/bullet_warm.png").get_image()
+	if pimg.is_compressed():
+		pimg.decompress()
+	var pxmin := 999
+	var pxmax := -1
+	for x in pimg.get_width():
+		for y in pimg.get_height():
+			if pimg.get_pixel(x, y).a > 0.1:
+				pxmin = mini(pxmin, x)
+				pxmax = maxi(pxmax, x)
+	var pw := pxmax - pxmin + 1
+	_ok(pw <= 8, "玩家弹丸实体宽度 %d px（枪械图会是 14px 以上）" % pw)
 
 
 ## 运行时：实际生成两种弹丸，确认贴图与颜色都对
@@ -95,13 +108,14 @@ func _audit_runtime() -> void:
 	_ok(absf(pc.r - ec.r) > 0.05 or absf(pc.g - ec.g) > 0.05 or absf(pc.b - ec.b) > 0.05,
 		"运行时敌我颜色不同")
 
-	# set_tier 不能把阵营色冲掉
+	# set_tier 只提亮度、不改色相：玩家弹的暖色已烘焙进贴图，
+	# modulate 应保持中性白（若带色相会与贴图暖色叠浑）。
 	pb.call("set_tier", 4)
 	var after: Color = pb.get("_sprite").modulate
-	_ok(after.r > after.b,
-		"玩家弹设tier4 后仍偏暖（红 %.2f > 蓝 %.2f）——set_tier 没冲掉阵营色"
-			% [after.r, after.b])
-	_ok(after.r >= 0.9, "tier 提亮后亮度未塌陷（红 %.2f）" % after.r)
+	_ok(absf(after.r - after.b) < 0.06,
+		"玩家弹 T4 染色接近中性白、不叠浑（%s）" % str(after))
+	_ok(after.r > 1.0, "T4 比 T1 更亮（modulate %.2f）" % after.r)
+	_ok(pb.scale.x > 1.3, "T4 尺寸明显更大（%.2f）" % pb.scale.x)
 
 	pb.queue_free()
 	eb.queue_free()

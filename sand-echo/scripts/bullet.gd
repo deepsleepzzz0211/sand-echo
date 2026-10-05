@@ -18,22 +18,18 @@ const MASK_PLAYER_BULLET := 4
 const MASK_ENEMY_BULLET := 2
 const GROUP_ENEMY_HURTBOX := "enemy_hurtbox"
 const GROUP_PLAYER_HURTBOX := "player_hurtbox"
-const TEX_PLAYER := preload("res://assets/art/fx/bullet_player.png")
-# 武器等级配色：同一批 CC0 弹丸帧，让玩家一眼看出手上这把枪到第几级
-const TEX_TIER := [
-	preload("res://assets/art/fx/bullet_t2.png"),
-	preload("res://assets/art/fx/bullet_t3.png"),
-	preload("res://assets/art/fx/bullet_t4.png"),
-	preload("res://assets/art/fx/bullet_t5.png"),
-]
+## 玩家弹丸：暖色两级配色（深琥珀描边 + 亮黄核心）已烘焙进贴图。
+## 原 bullet_player.png 是「暗紫描边(71,50,75) + 纯白核心」，靠 modulate
+## 整体乘暖黄会把描边染成土褐、实测显脏，故预生成一张同色系的。
+const TEX_PLAYER := preload("res://assets/art/fx/bullet_warm.png")
 ## 敌我弹道必须一眼可辨，这是弹幕游戏的可读性底线。
 ## 此前敌我弹丸都是纯白（bullet_enemy / bullet_player 的主色都是 255,255,255），
 ## 缩到屏幕尺寸后都退化成一个白点；敌弹那张还是「四向散射」图案，
 ## 语义上根本不是一颗子弹。现在：
 ##   玩家 = 暖黄，敌人 = 品红（危险色留给敌人）
-## 颜色用 modulate 叠，不额外占用 bullet_t2..t5 —— 那几张要留给武器等级视觉。
+## 玩家侧的暖黄烘焙进贴图，modulate 保持白色；敌人侧用 modulate 上品红。
 const TEX_ENEMY := preload("res://assets/art/fx/bullet_solo.png")
-const COLOR_PLAYER := Color(1.0, 0.82, 0.35, 1.0)   # 暖黄：自己的输出
+const COLOR_PLAYER := Color(1.0, 0.82, 0.35, 1.0)   # 暖黄（已烘焙进TEX_PLAYER，此常量供 tier 提亮与测试用）
 const COLOR_ENEMY := Color(1.0, 0.28, 0.68, 1.0)    # 品红：打向我的
 ## 敌人弹丸缩放。bullet_solo 的实体只有 24px 画布里约 5px，1.0 缩放在 1920x1080
 ## 上几乎看不见；放大到与玩家弹丸（约 14px）相当。
@@ -61,6 +57,10 @@ var _bounds: Rect2 = Rect2()
 var _pending_tex: Texture2D = null
 var _pending_tint: Color = Color(1, 1, 1, 1)
 var _pending_scale: float = 1.0
+## 武器自带的弹丸尺寸基准（weapons.json 的 bullet_scale），与 tier 尺寸相乘。
+## 此前玩家侧直接写 b.scale，会被 set_tier 覆盖，故改为走接口。
+var _weapon_scale: float = 1.0
+var _last_tier: int = 1
 
 
 func _ready() -> void:
@@ -77,21 +77,33 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 
 
-## 玩家弹丸按武器等级提亮（@trace WPN-001）。tier 越高级数越大越亮。
-## 注意是在基色上「乘」亮度而不是直接赋 modulate：直接赋值会把 setup() 里
-## 按阵营刷的暖黄冲掉，玩家和敌人弹丸就又变成同一个颜色了。
+## 玩家弹丸按武器等级表现强弱（@trace WPN-001）：尺寸 + 亮度。
+## 此前等级靠换贴图（bullet_t2..t5）表达，但那几张素材本身是枪械图，
+## 射出去像「一把小枪在飞」。改成同一张暖色弹丸贴图后，
+## 等级改由尺寸与亮度承担——放大是最直观的强度信号，实测四档递增清晰可辨。
+const TIER_SIZE := [1.80, 2.02, 2.27, 2.56]
+const TIER_BRIGHT := [1.00, 1.08, 1.16, 1.25]
+
+
 func set_tier(tier: int) -> void:
 	if owner_kind != Owner.PLAYER:
 		return
-	var idx := clampi(tier - 1, 0, TEX_TIER.size() - 1)
-	# 高级弹丸自带一点自发光，暗底上更醒目
-	var t := float(idx) / float(TEX_TIER.size() - 1)
-	var boost := Color(1.0, 1.0, 1.0).lerp(Color(1.25, 1.2, 1.1), t)
-	_set_visual(TEX_TIER[idx], Color(
-		COLOR_PLAYER.r * boost.r,
-		COLOR_PLAYER.g * boost.g,
-		COLOR_PLAYER.b * boost.b,
-		COLOR_PLAYER.a), _pending_scale)
+	_last_tier = clampi(tier, 1, 4)
+	var i := _last_tier - 1
+	var br := float(TIER_BRIGHT[i])
+	# 只提亮度，不换色相：贴图已是暖色，modulate 保持近白，
+	# 若在此赋一个带色相的 modulate 会把阵营色与贴图暖色叠浑。
+	_set_visual(_pending_tex, Color(br, br, br, 1.0),
+			float(TIER_SIZE[i]) * _weapon_scale)
+
+
+## 设置武器自带的弹丸尺寸基准。玩家侧调用，与武器等级尺寸相乘。
+## @trace WPN-003
+func set_weapon_scale(sc: float) -> void:
+	_weapon_scale = maxf(0.1, sc)
+	var want := _weapon_scale * float(TIER_SIZE[_last_tier - 1])
+	_pending_scale = want
+	scale = Vector2.ONE * want
 
 
 func setup(p_dir: Vector2, p_damage: int, p_owner: int, p_pierce: int = 0) -> void:
@@ -104,13 +116,14 @@ func setup(p_dir: Vector2, p_damage: int, p_owner: int, p_pierce: int = 0) -> vo
 		collision_layer = LAYER_PLAYER_BULLET
 		collision_mask = MASK_PLAYER_BULLET
 		add_to_group("player_bullet")
-		_set_visual(TEX_PLAYER, COLOR_PLAYER, 1.0)
+		# 暖色已烘焙进贴图，modulate 保持白色，亮度留给 set_tier
+		_set_visual(TEX_PLAYER, Color(1, 1, 1, 1), 1.0)
 	else:
 		collision_layer = LAYER_ENEMY_BULLET
 		collision_mask = MASK_ENEMY_BULLET
 		add_to_group("enemy_bullet")
-		# 与玩家侧一致：缩放节点本身，视觉与碰撞体一起变大
 		_set_visual(TEX_ENEMY, COLOR_ENEMY, ENEMY_SCALE)
+
 
 
 ## 记录视觉意图。若已在场景树内则立即应用，否则等 _ready() 兜底。

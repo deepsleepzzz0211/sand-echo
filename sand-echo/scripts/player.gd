@@ -241,7 +241,7 @@ func _fire_weapon(def: Dictionary, tier: int) -> void:
 		b.setup(aim_dir.rotated(angle), dmg, Bullet.Owner.PLAYER, pierce)
 		b.set_tier(tier)
 		b.speed = speed
-		b.scale = Vector2.ONE * RunState.weapon_bullet_scale(def, tier)
+		b.call("set_weapon_scale", RunState.weapon_bullet_scale(def, tier))
 		b.position = global_position + aim_dir.rotated(angle) * MUZZLE_OFFSET
 		if not arena.size.length_squared() > 0.0:
 			b.set_bounds(arena)

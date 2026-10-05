@@ -61,17 +61,38 @@ func _audit_real_order() -> void:
 	world.add_child(pb)
 
 	var p_spr := pb.get_node("Sprite") as Sprite2D
-	var want_t4: Texture2D = load("res://assets/art/fx/bullet_t5.png")
 	print("     玩家弹 T4 实际贴图：%s" % p_spr.texture.resource_path.get_file())
-	_ok(p_spr.texture == want_t4,
-		"玩家弹 T4 在真实调用顺序下换上了等级贴图（实际 %s）"
+	print("     玩家弹 T4 modulate：%s节点 scale %.2f" % [str(p_spr.modulate), pb.scale.x])
+	_ok(p_spr.texture == load("res://assets/art/fx/bullet_warm.png"),
+		"玩家弹用上暖色弹丸贴图 bullet_warm（实际 %s）"
 			% p_spr.texture.resource_path.get_file())
-	_ok(p_spr.modulate.r > p_spr.modulate.b,
-		"玩家弹 T4 仍偏暖色（%s）" % str(p_spr.modulate))
+	_ok(pb.scale.x > 1.3,
+		"玩家弹 T4 明显放大（scale %.2f，应> 1.3）" % pb.scale.x)
+	_ok(p_spr.modulate.r > 1.0, "T4 比T1 更亮（modulate %s）" % str(p_spr.modulate))
+	# 贴图已自带暖色，故 modulate 应接近中性白（若带色相会叠浑）
+	_ok(absf(p_spr.modulate.r - p_spr.modulate.b) < 0.06,
+		"T4 染色接近中性白、不叠浑（%s）" % str(p_spr.modulate))
 
-	# 敌我贴图必须不同
-	_ok(p_spr.texture != e_spr.texture,
-		"真实顺序下敌我贴图确实不同（这才是玩家看到的那一帧）")
+	# 敌我贴图与颜色都不同
+	_ok(p_spr.texture != e_spr.texture, "真实顺序下敌我贴图不同")
+	_ok(absf(p_spr.modulate.r - e_spr.modulate.b) > 0.2,
+		"真实顺序下敌我颜色不同（玩家 %s / 敌人 %s）"
+			% [str(p_spr.modulate), str(e_spr.modulate)])
+
+	# tier 尺寸阶梯必须单调递增
+	var sizes: Array[float] = []
+	for t in 4:
+		var tb := (load("res://scenes/bullet.tscn") as PackedScene).instantiate() as Node2D
+		tb.call("setup", Vector2.RIGHT, 5, 0, 0)
+		tb.call("set_tier", t + 1)
+		world.add_child(tb)
+		sizes.append(tb.scale.x)
+		tb.queue_free()
+	var mono := true
+	for i in range(1, sizes.size()):
+		if sizes[i] <= sizes[i - 1]:
+			mono = false
+	_ok(mono, "T1→T4 尺寸单调递增（%s）" % str(sizes))
 
 	eb.queue_free()
 	pb.queue_free()
